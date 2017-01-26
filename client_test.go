@@ -4,6 +4,7 @@ import (
 	"context"
 	"net/http"
 	"net/http/httptest"
+	"net/url"
 	"testing"
 )
 
@@ -11,7 +12,12 @@ func TestGet(t *testing.T) {
 	ts, c := testServerAndClient()
 	defer ts.Close()
 
-	r, err := c.Get(context.Background(), Sweden, Swedish, Date(2017, 1, 25), nil)
+	r, err := c.Get(
+		context.Background(),
+		Sweden,
+		Swedish,
+		Date(2017, 1, 25),
+	)
 	if err != nil {
 		t.Fatalf("unexpected error %#v", err)
 	}
@@ -22,6 +28,39 @@ func TestGet(t *testing.T) {
 
 	if got, want := len(r.Days[0].Channels), 42; got != want {
 		t.Fatalf("r.Days[0].Channels = %d, want %d", got, want)
+	}
+}
+
+func TestGetPeriod(t *testing.T) {
+	ts, c := testServerAndClient()
+	defer ts.Close()
+
+	r, err := c.GetPeriod(
+		context.Background(),
+		Denmark,
+		Danish,
+		Date(2017, 1, 26),
+		Date(2017, 1, 27),
+		url.Values{
+			"genre": {"drama"},
+		},
+	)
+	if err != nil {
+		t.Fatalf("unexpected error %#v", err)
+	}
+
+	if got, want := len(r.Days), 2; got != want {
+		t.Fatalf("r.Days = %d, want %d", got, want)
+	}
+
+	if got, want := len(r.Days[1].Channels), 10; got != want {
+		t.Fatalf("r.Days[0].Channels = %d, want %d", got, want)
+	}
+
+	channel := r.Days[1].Channels[4]
+
+	if got, want := channel.Name, "CanalFilm2"; got != want {
+		t.Fatalf("channel.Name = %q, want %q", got, want)
 	}
 }
 
