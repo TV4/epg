@@ -92,8 +92,8 @@ const (
 //
 // Data retrieved like this:
 //
-// curl -H "Accept: application/xml" "https://api.cmore.se/epg/se/sv/2017-01-26/2017-02-13" | xmllint --format - |
-// grep ChannelId | awk -F '"' '{print $2 " " $4 " = \"" $2 "\""}' | sort -n | uniq | awk '{print $2 " " $3 " " $4}' | pbcopy
+//     curl -H "Accept: application/xml" "https://api.cmore.se/epg/se/sv/2017-01-26/2017-02-13" | xmllint --format - |
+//     grep ChannelId | awk -F '"' '{print $2 " " $4 " = \"" $2 "\""}' | sort -n | uniq | awk '{print $2 " " $3 " " $4}' | pbcopy
 //
 const (
 	CanalExtra1            = "3"

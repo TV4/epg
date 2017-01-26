@@ -2,14 +2,14 @@ package epg
 
 // Data retrieved like this:
 //
-// curl -H "Accept: application/xml" "https://api.cmore.se/epg/se/sv/2099-01-02" | xmllint --format - | pbcopy
+//     curl -H "Accept: application/xml" "https://api.cmore.se/epg/se/sv/2099-01-02" | xmllint --format - | pbcopy
 //
 var emptyEPGResponseXML = []byte(`<?xml version="1.0"?>
 <Epg xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" FromDate="2099-01-02T00:00:00" UntilDate="2099-01-02T00:00:00" />`)
 
 // Data retrieved like this:
 //
-// curl -H "Accept: application/xml" "https://api.cmore.se/epg/dk/da/2017-01-26/2017-01-27?genre=Drama" | xmllint --format - | pbcopy
+//     curl -H "Accept: application/xml" "https://api.cmore.se/epg/dk/da/2017-01-26/2017-01-27?genre=Drama" | xmllint --format - | pbcopy
 //
 var danishTwoDaysDramaEPGResponseXML = []byte(`<?xml version="1.0"?>
 <Epg xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" FromDate="2017-01-26T00:00:00" UntilDate="2017-01-27T00:00:00">
@@ -463,7 +463,7 @@ var danishTwoDaysDramaEPGResponseXML = []byte(`<?xml version="1.0"?>
 
 // Data retrieved like this:
 //
-// curl -H "Accept: application/xml" https://api.cmore.se/epg/se/sv/2017-01-25 | xmllint --format - | pbcopy
+//     curl -H "Accept: application/xml" https://api.cmore.se/epg/se/sv/2017-01-25 | xmllint --format - | pbcopy
 //
 var swedishFullDayEPGResponseXML = []byte(`<?xml version="1.0"?>
 <Epg xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" FromDate="2017-01-25T00:00:00" UntilDate="2017-01-25T00:00:00">
