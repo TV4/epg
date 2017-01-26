@@ -43,6 +43,7 @@ func NewClient(options ...func(*client)) Client {
 	return c
 }
 
+// BaseURL changes the *client base URL based on the provided rawurl
 func BaseURL(rawurl string) func(*client) {
 	return func(c *client) {
 		if u, err := url.Parse(rawurl); err == nil {
@@ -51,12 +52,14 @@ func BaseURL(rawurl string) func(*client) {
 	}
 }
 
+// HTTPClient changes the *client HTTP client to the provided *http.Client
 func HTTPClient(hc *http.Client) func(*client) {
 	return func(c *client) {
 		c.httpClient = hc
 	}
 }
 
+// Date formats a year, month, day into the format yyyy-mm-dd
 func Date(year int, month time.Month, day int) string {
 	return fmt.Sprintf("%04d-%02d-%02d", year, month, day)
 }

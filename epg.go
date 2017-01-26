@@ -1,23 +1,44 @@
 package epg
 
-import "errors"
+import (
+	"errors"
+	"net/url"
+)
 
+// Country is the type used for lowercase ISO 3166-1 alpha-2 country codes
+// as per https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
 type Country string
 
 const (
-	Sweden  Country = "se"
-	Norway  Country = "no"
+	// Sweden is the country code se
+	Sweden Country = "se"
+
+	// Norway is the country code no
+	Norway Country = "no"
+
+	// Denmark is the country code dk
 	Denmark Country = "dk"
+
+	// Finland is the country code fi
 	Finland Country = "fi"
 )
 
+// Language is the type used for ISO 639-1 language codes
+// as per https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 type Language string
 
 const (
-	Swedish   Language = "sv"
+	// Swedish is the language code sv
+	Swedish Language = "sv"
+
+	// Norwegian is the language code no
 	Norwegian Language = "no"
-	Danish    Language = "da"
-	Finnish   Language = "fi"
+
+	// Danish is the language code da
+	Danish Language = "da"
+
+	// Finnish is the language code fi
+	Finnish Language = "fi"
 )
 
 var (
@@ -36,6 +57,7 @@ type Response struct {
 	Meta      *Meta  `xml:"-" json:"meta,omitempty"`
 }
 
+// Meta is a type used for request/response metadata
 type Meta map[string]interface{}
 
 // Day is an EPG day
@@ -72,7 +94,7 @@ type Schedule struct {
 	Program           Program `xml:"Program" json:"program"`
 }
 
-// Program is the program that is scheduled
+// Program is the program that is scheduled in the EPG
 type Program struct {
 	ProgramID                string  `xml:"ProgramId,attr" json:"program_id"`
 	Title                    string  `xml:"Title,attr" json:"title"`
@@ -84,7 +106,7 @@ type Program struct {
 	VodStart                 string  `xml:"VodStart,attr" json:"vod_start"`
 	VodEnd                   string  `xml:"VodEnd,attr" json:"vod_end"`
 	Duration                 int     `xml:"Duration,attr" json:"duration"`
-	ContentSourceId          string  `xml:"ContentSourceId,attr" json:"content_source_id"`
+	ContentSourceID          string  `xml:"ContentSourceId,attr" json:"content_source_id"`
 	ProductionYear           int     `xml:"ProductionYear,attr" json:"production_year"`
 	Rating                   string  `xml:"Rating,attr" json:"rating"`
 	Actors                   string  `xml:"Actors,attr" json:"actors"`
