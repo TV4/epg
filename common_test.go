@@ -8,14 +8,20 @@ import (
 func testServerAndClient() (*httptest.Server, Client) {
 	ts := httptest.NewServer(http.HandlerFunc(
 		func(w http.ResponseWriter, r *http.Request) {
+			w.Header().Set("Content-Type", "application/xml; charset=utf-8")
+
 			switch r.URL.Path {
 			case "/epg/se/sv/2017-01-25":
 				w.Write(swedishFullDayEPGResponseXML)
+			default:
+				w.Write(emptyEPGResponseXML)
 			}
 		}))
 
 	return ts, NewClient(BaseURL(ts.URL))
 }
+
+var emptyEPGResponseXML = []byte(`<Epg xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" FromDate="2099-01-02T00:00:00" UntilDate="2099-01-02T00:00:00" />`)
 
 // Data retrieved like this:
 // curl -H "Accept: application/xml" https://api.cmore.se/epg/se/sv/2017-01-25 | xmllint --format - | pbcopy
