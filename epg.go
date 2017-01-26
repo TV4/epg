@@ -330,3 +330,14 @@ type Image struct {
 func (m Image) URL(format string) *url.URL {
 	return ImageBaseURL.ResolveReference(&url.URL{Path: "/" + m.ID + "/" + format + ".img"})
 }
+
+// Names takes a string of comma separated names, splits them into a slice, trims any space around each name
+func Names(s string) []string {
+	var names []string
+
+	for _, n := range strings.Split(s, ",") {
+		names = append(names, strings.TrimSpace(n))
+	}
+
+	return names
+}

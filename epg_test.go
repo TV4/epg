@@ -1,6 +1,9 @@
 package epg
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 func TestChannelID(t *testing.T) {
 	for _, tt := range []struct {
@@ -20,6 +23,33 @@ func TestChannelID(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestNames(t *testing.T) {
+	for _, tt := range []struct {
+		program Program
+		count   int
+		last    string
+	}{
+		{Program{ID: "38253", Actors: "August Diehl,Sara Hjort Ditlevsen, Jo Adrian Haavind"}, 3, "Jo Adrian Haavind"},
+	} {
+		t.Run(tt.program.ID, func(t *testing.T) {
+			names := Names(tt.program.Actors)
+
+			if got, want := len(names), tt.count; got != want {
+				t.Fatalf("len(%#v) = %d, want %d", names, got, want)
+			}
+
+			if got, want := names[len(names)-1], tt.last; got != want {
+				t.Fatalf("names[len(names)-1] = %q, want %q", got, want)
+			}
+		})
+	}
+}
+
+func ExampleNames() {
+	fmt.Printf("%#v\n", Names("August Diehl,Sara Hjort Ditlevsen, Jo Adrian Haavind"))
+	// Output: []string{"August Diehl", "Sara Hjort Ditlevsen", "Jo Adrian Haavind"}
 }
 
 func TestImageURL(t *testing.T) {
