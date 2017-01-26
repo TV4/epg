@@ -110,13 +110,13 @@ func main() {
 		return
 	}
 
+	d := r.Day()
+
 	programs := map[string]epg.Program{}
 
-	for _, d := range r.Days {
-		for _, c := range d.Channels {
-			for _, s := range c.Schedules {
-				programs[s.Program.ProgramID] = s
-			}
+	for _, c := range d.Channels {
+		for _, s := range c.Schedules {
+			programs[s.Program.ID] = s.Program
 		}
 	}
 
