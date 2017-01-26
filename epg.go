@@ -1,8 +1,55 @@
+/*
+
+Package epg contains a client for the C More EPG Web API
+
+Installation
+
+Just go get the package:
+
+    go get -u github.com/TV4/epg
+
+Usage
+
+A small usage example
+
+      package main
+
+      import (
+      	"context"
+      	"fmt"
+      	"time"
+
+      	epg "github.com/TV4/epg"
+      )
+
+      func main() {
+      	var (
+      		ec   = epg.NewClient()
+      		ctx  = context.Background()
+      		now  = time.Now()
+      		date = epg.Date(now.Year(), now.Month(), now.Day())
+      	)
+
+      	if r, err := ec.Get(ctx, epg.Sweden, epg.Swedish, date); err == nil {
+      		c := r.Day().Channel(epg.TV4)
+
+      		for _, s := range c.Schedules {
+      			fmt.Println(s.CalendarDate, s.Program.Title)
+      		}
+      	}
+      }
+
+Documentation
+
+http://api.cmore.se/
+
+*/
 package epg
 
 import (
 	"errors"
 	"net/url"
+	"strings"
 )
 
 // Country is the type used for lowercase ISO 3166-1 alpha-2 country codes
@@ -161,6 +208,26 @@ type Response struct {
 	Meta      *Meta  `xml:"-" json:"meta,omitempty"`
 }
 
+// Day returns the first day in the response, or the (optional) provided date.
+// Returns empty Day if not found
+func (r *Response) Day(dates ...string) Day {
+	if len(r.Days) == 0 {
+		return Day{}
+	}
+
+	if len(dates) == 0 {
+		return r.Days[0]
+	}
+
+	for _, d := range r.Days {
+		if strings.HasPrefix(d.BroadcastDate, dates[0]) {
+			return d
+		}
+	}
+
+	return Day{}
+}
+
 // Meta is a type used for request/response metadata
 type Meta map[string]interface{}
 
@@ -170,9 +237,21 @@ type Day struct {
 	Channels      []Channel `xml:"Channel" json:"channels,omitempty"`
 }
 
+// Channel returns the channel with the given id.
+// Returns empty Channel if not found
+func (d Day) Channel(id string) Channel {
+	for _, c := range d.Channels {
+		if c.ID == id {
+			return c
+		}
+	}
+
+	return Channel{}
+}
+
 // Channel is a TV channel in the EPG
 type Channel struct {
-	ChannelID   int        `xml:"ChannelId,attr" json:"channel_id"`
+	ID          string     `xml:"ChannelId,attr" json:"channel_id"`
 	Name        string     `xml:"Name,attr" json:"name"`
 	Title       string     `xml:"Title,attr" json:"title"`
 	LogoID      string     `xml:"LogoId,attr" json:"logo_id"`
@@ -184,7 +263,7 @@ type Channel struct {
 
 // Schedule is the TV program schedule of a channel in the EPG
 type Schedule struct {
-	ScheduleID        string  `xml:"ScheduleId,attr" json:"schedule_id"`
+	ID                string  `xml:"ScheduleId,attr" json:"schedule_id"`
 	NextStart         string  `xml:NextStart",attr" json:"next_start"`
 	CalendarDate      string  `xml:"CalendarDate,attr" json:"calendar_date"`
 	IsPremiere        bool    `xml:"IsPremiere,attr" json:"premiere"`
@@ -200,7 +279,7 @@ type Schedule struct {
 
 // Program is the program that is scheduled in the EPG
 type Program struct {
-	ProgramID                string  `xml:"ProgramId,attr" json:"program_id"`
+	ID                       string  `xml:"ProgramId,attr" json:"program_id"`
 	Title                    string  `xml:"Title,attr" json:"title"`
 	OriginalTitle            string  `xml:"OriginalTitle,attr" json:"original_title"`
 	Genre                    string  `xml:"Genre,attr" json:"genre"`

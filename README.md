@@ -16,6 +16,37 @@ Still under active development. Expect breaking changes.
 
 ## Usage examples
 
+**The TV4 schedule for today**
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"time"
+
+	epg "github.com/TV4/epg"
+)
+
+func main() {
+	var (
+		ec   = epg.NewClient()
+		ctx  = context.Background()
+		now  = time.Now()
+		date = epg.Date(now.Year(), now.Month(), now.Day())
+	)
+
+	if r, err := ec.Get(ctx, epg.Sweden, epg.Swedish, date); err == nil {
+		c := r.Day().Channel(epg.TV4)
+
+		for _, s := range c.Schedules {
+			fmt.Println(s.CalendarDate, s.Program.Title)
+		}
+	}
+}
+```
+
 **Drama on CMoreStarsHD**
 
 ```go
