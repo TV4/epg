@@ -1,6 +1,12 @@
 package epg
 
 // Channel constants
+//
+// Data retrieved like this:
+//
+// curl -H "Accept: application/xml" "https://api.cmore.se/epg/se/sv/2017-01-26/2017-02-13" | xmllint --format - |
+// grep ChannelId | awk -F '"' '{print $2 " " $4 " = \"" $2 "\""}' | sort -n | uniq | awk '{print $2 " " $3 " " $4}' | pbcopy
+//
 const (
 	CanalExtra1            = "3"
 	CanalExtra2            = "4"
@@ -26,6 +32,7 @@ const (
 	CMoreLive4HD           = "67"
 	CMoreHockeyHD          = "68"
 	CMoreGolfHD            = "70"
+	CMoreGolfDenmarkHD     = "71"
 	SVT1                   = "74"
 	SVT2                   = "75"
 	TV4                    = "76"
@@ -71,6 +78,7 @@ var channels = map[string]string{
 	"CMoreLive4HD":           CMoreLive4HD,
 	"CMoreHockeyHD":          CMoreHockeyHD,
 	"CMoreGolfHD":            CMoreGolfHD,
+	"CMoreGolfDenmarkHD":     CMoreGolfDenmarkHD,
 	"SVT1":                   SVT1,
 	"SVT2":                   SVT2,
 	"TV4":                    TV4,
