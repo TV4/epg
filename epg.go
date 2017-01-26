@@ -202,7 +202,7 @@ var (
 
 // Response data from the EPG API
 type Response struct {
-	Days      []Day  `xml:"Day,omitempty"`
+	Days      []Day  `xml:"Day,omitempty" json:"days,omitempty"`
 	FromDate  string `xml:"FromDate,attr" json:"from_date,omitempty"`
 	UntilDate string `xml:"UntilDate,attr" json:"until_date,omitempty"`
 	Meta      *Meta  `xml:"-" json:"meta,omitempty"`
@@ -271,8 +271,8 @@ type Schedule struct {
 	Type              string  `xml:"Type,attr" json:"type"`
 	AlsoAvailableInHD bool    `xml:"AlsoAvailableInHD,attr" json:"also_available_in_hd"`
 	AlsoAvailableIn3D bool    `xml:"AlsoAvailableIn3D,attr" json:"also_available_in_3d"`
-	Is3D              bool    `xml:"Is3D" json:"is_3d"`
-	IsPPV             bool    `xml:"IsPPV" json:"is_ppv"`
+	Is3D              bool    `xml:"Is3D,attr" json:"is_3d"`
+	IsPPV             bool    `xml:"IsPPV,attr" json:"is_ppv"`
 	PlayAssetID       string  `xml:"PlayAssetId1,attr" json:"play_asset_id"`
 	Program           Program `xml:"Program" json:"program"`
 }
