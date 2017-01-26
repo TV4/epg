@@ -108,7 +108,20 @@ type Program struct {
 	SynopsisFacts            string  `xml:"Synopsis>Facts" json:"facts"`
 }
 
+// ImageBaseURL is the base URL for images
+var ImageBaseURL = &url.URL{Scheme: "https", Host: "img-cdn-cmore.b17g.services"}
+
+// Image is a typed identifier for an image that can be retrieved at
+// https://img-cdn-cmore.b17g.services/:id/:format.img
+//
+// (format 164 can be used to retrieve the full size image)
+//
 type Image struct {
 	ID       string `xml:"Id,attr" json:"id"`
 	Category string `xml:"Category,attr" json:"category"`
+}
+
+// URL returns an *url.URL based on the ImageBaseURL, image ID and provided format
+func (m Image) URL(format string) *url.URL {
+	return ImageBaseURL.ResolveReference(&url.URL{Path: "/" + m.ID + "/" + format + ".img"})
 }
