@@ -133,7 +133,13 @@ func (c *client) query(attributes []url.Values) url.Values {
 }
 
 func (c *client) request(ctx context.Context, path string, query url.Values) (*http.Request, error) {
-	rel, err := url.Parse(path + "?" + query.Encode())
+	rawurl := path
+
+	if len(query) > 0 {
+		rawurl += "?" + query.Encode()
+	}
+
+	rel, err := url.Parse(rawurl)
 	if err != nil {
 		return nil, err
 	}
