@@ -182,6 +182,39 @@ func TestGetChannelGroup(t *testing.T) {
 	}
 }
 
+func TestGetChannel(t *testing.T) {
+	ts, c := testServerAndClient()
+	defer ts.Close()
+
+	r, err := c.GetChannel(
+		context.Background(),
+		Finland,
+		Finnish,
+		Date(2017, 1, 27),
+		Date(2017, 1, 27),
+		CanalHD,
+	)
+	if err != nil {
+		t.Fatalf("unexpected error %#v", err)
+	}
+
+	if got, want := len(r.Days), 1; got != want {
+		t.Fatalf("r.Days = %d, want %d", got, want)
+	}
+
+	d := r.Day()
+
+	if got, want := len(d.Channels), 1; got != want {
+		t.Fatalf("len(d.Channels) = %d, want %d", got, want)
+	}
+
+	channel := d.Channel(CanalHD)
+
+	if got, want := channel.LogoID, "6636a32b-629c-45a9-a546-505d5cfe8d33"; got != want {
+		t.Fatalf("channel.LogoID = %q, want %q", got, want)
+	}
+}
+
 func TestRequest(t *testing.T) {
 	ua := "Test-Request-Agent"
 
@@ -217,6 +250,8 @@ func testServerAndClient() (*httptest.Server, Client) {
 				w.Write(swedishLiveSportsEPGResponseXML)
 			case "/epg/dk/da/2017-01-26/2017-01-27?genre=drama":
 				w.Write(danishTwoDaysDramaEPGResponseXML)
+			case "/epg/fi/fi/2017-01-27/2017-01-27/12":
+				w.Write(finnishChannel12ResponseXML)
 			default:
 				w.Write(emptyEPGResponseXML)
 			}
