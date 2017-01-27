@@ -25,6 +25,84 @@ func TestChannelID(t *testing.T) {
 	}
 }
 
+func TestResponseDay(t *testing.T) {
+	d1 := Day{
+		BroadcastDate: "2017-01-01T00:00:00",
+		Channels: []Channel{
+			Channel{ID: "1"},
+		},
+	}
+
+	d2 := Day{
+		BroadcastDate: "2017-01-02T00:00:00",
+		Channels: []Channel{
+			Channel{ID: "1"},
+			Channel{ID: "2"},
+		},
+	}
+
+	for _, tt := range []struct {
+		r     *Response
+		dates []string
+		day   Day
+	}{
+		{&Response{}, nil, Day{}},
+		{&Response{Days: []Day{d1}}, nil, d1},
+		{&Response{Days: []Day{d1, d2}}, nil, d1},
+		{&Response{Days: []Day{d1, d2}}, []string{Date(2017, 1, 1)}, d1},
+		{&Response{Days: []Day{d1, d2}}, []string{Date(2017, 1, 2)}, d2},
+		{&Response{Days: []Day{d1}}, []string{Date(2017, 1, 2)}, Day{}},
+	} {
+		day := tt.r.Day(tt.dates...)
+
+		if got, want := len(day.Channels), len(tt.day.Channels); got != want {
+			t.Fatalf("len(day.Channels) = %d, want %d", got, want)
+		}
+
+		if got, want := day.BroadcastDate, tt.day.BroadcastDate; got != want {
+			t.Fatalf("day.BroadcastDate = %q, want %q", got, want)
+		}
+	}
+}
+
+func TestDayChannel(t *testing.T) {
+	for _, tt := range []struct {
+		day  Day
+		id   string
+		want string
+	}{
+		{Day{}, "", ""},
+		{Day{Channels: []Channel{{ID: "1"}}}, "1", "1"},
+		{Day{Channels: []Channel{{ID: "1"}}}, "2", ""},
+		{Day{Channels: []Channel{{ID: "1"}, {ID: "2"}}}, "2", "2"},
+	} {
+		t.Run(tt.id, func(t *testing.T) {
+			c := tt.day.Channel(tt.id)
+
+			if got, want := c.ID, tt.want; got != want {
+				t.Fatalf("c.ID = %q, want %q", got, want)
+			}
+		})
+	}
+}
+
+func TestImageURL(t *testing.T) {
+	for _, tt := range []struct {
+		image  Image
+		format string
+		want   string
+	}{
+		{Image{ID: "123"}, "456", "https://img-cdn-cmore.b17g.services/123/456.img"},
+		{Image{ID: "456"}, "789", "https://img-cdn-cmore.b17g.services/456/789.img"},
+	} {
+		t.Run(tt.image.ID, func(t *testing.T) {
+			if got := tt.image.URL(tt.format).String(); got != tt.want {
+				t.Fatalf("tt.image.URL(%q).String() = %q, want %q", tt.format, got, tt.want)
+			}
+		})
+	}
+}
+
 func TestNames(t *testing.T) {
 	for _, tt := range []struct {
 		program Program
@@ -50,21 +128,4 @@ func TestNames(t *testing.T) {
 func ExampleNames() {
 	fmt.Printf("%#v\n", Names("August Diehl,Sara Hjort Ditlevsen, Jo Adrian Haavind"))
 	// Output: []string{"August Diehl", "Sara Hjort Ditlevsen", "Jo Adrian Haavind"}
-}
-
-func TestImageURL(t *testing.T) {
-	for _, tt := range []struct {
-		image  Image
-		format string
-		want   string
-	}{
-		{Image{ID: "123"}, "456", "https://img-cdn-cmore.b17g.services/123/456.img"},
-		{Image{ID: "456"}, "789", "https://img-cdn-cmore.b17g.services/456/789.img"},
-	} {
-		t.Run(tt.image.ID, func(t *testing.T) {
-			if got := tt.image.URL(tt.format).String(); got != tt.want {
-				t.Fatalf("tt.image.URL(%q).String() = %q, want %q", tt.format, got, tt.want)
-			}
-		})
-	}
 }
