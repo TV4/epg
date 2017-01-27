@@ -29,6 +29,67 @@ func TestNewClient(t *testing.T) {
 	}
 }
 
+func TestHTTPClient(t *testing.T) {
+	hc := &http.Client{Timeout: 5 * time.Second}
+
+	c, ok := NewClient(HTTPClient(hc)).(*client)
+
+	if !ok {
+		t.Fatalf("expected *client")
+	}
+
+	if got, want := c.httpClient.Timeout, 5*time.Second; got != want {
+		t.Fatalf("c.httpClient.Timeout = %s, want %s", got, want)
+	}
+}
+
+func TestBaseURL(t *testing.T) {
+	rawurl := "http://example.com/"
+
+	c, ok := NewClient(BaseURL(rawurl)).(*client)
+
+	if !ok {
+		t.Fatalf("expected *client")
+	}
+
+	if got, want := c.baseURL.String(), rawurl; got != want {
+		t.Fatalf("c.baseURL.String() = %q, want %q", got, want)
+	}
+}
+
+func TestUserAgent(t *testing.T) {
+	ua := "Test-Agent"
+
+	c, ok := NewClient(UserAgent(ua)).(*client)
+
+	if !ok {
+		t.Fatalf("expected *client")
+	}
+
+	if got, want := c.userAgent, ua; got != want {
+		t.Fatalf("c.userAgent = %q, want %q", got, want)
+	}
+}
+
+func TestDate(t *testing.T) {
+	for _, tt := range []struct {
+		year  int
+		month time.Month
+		day   int
+		want  string
+	}{
+		{1, time.February, 3, "0001-02-03"},
+		{2009, time.November, 10, "2009-11-10"},
+		{2017, time.January, 26, "2017-01-26"},
+	} {
+		t.Run(tt.want, func(t *testing.T) {
+			if got := Date(tt.year, tt.month, tt.day); got != tt.want {
+				t.Fatalf("Date(%d, %d, %d) = %q, want %q", tt.year, tt.month, tt.day, got, tt.want)
+			}
+		})
+	}
+}
+
 func TestGet(t *testing.T) {
 	ts, c := testServerAndClient()
 	defer ts.Close()
@@ -85,36 +146,8 @@ func TestGetPeriod(t *testing.T) {
 	}
 }
 
-func TestHTTPClient(t *testing.T) {
-	hc := &http.Client{Timeout: 5 * time.Second}
-
-	c, ok := NewClient(HTTPClient(hc)).(*client)
-
-	if !ok {
-		t.Fatalf("expected *client")
-	}
-
-	if got, want := c.httpClient.Timeout, 5*time.Second; got != want {
-		t.Fatalf("c.httpClient.Timeout = %s, want %s", got, want)
-	}
-}
-
-func TestBaseURL(t *testing.T) {
-	rawurl := "http://example.com/"
-
-	c, ok := NewClient(BaseURL(rawurl)).(*client)
-
-	if !ok {
-		t.Fatalf("expected *client")
-	}
-
-	if got, want := c.baseURL.String(), rawurl; got != want {
-		t.Fatalf("c.baseURL.String() = %q, want %q", got, want)
-	}
-}
-
-func TestUserAgent(t *testing.T) {
-	ua := "Test-Agent"
+func TestRequest(t *testing.T) {
+	ua := "Test-Request-Agent"
 
 	c, ok := NewClient(UserAgent(ua)).(*client)
 
@@ -122,8 +155,17 @@ func TestUserAgent(t *testing.T) {
 		t.Fatalf("expected *client")
 	}
 
-	if got, want := c.userAgent, ua; got != want {
-		t.Fatalf("c.userAgent = %q, want %q", got, want)
+	r, err := c.request(context.Background(), "/foo", url.Values{"bar": {"baz"}})
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	if got, want := r.Header.Get("User-Agent"), ua; got != want {
+		t.Fatalf("r.Header.Get(\"User-Agent\") = %q, want %q", got, want)
+	}
+
+	if got, want := r.URL.String(), "https://api.cmore.se/foo?bar=baz"; got != want {
+		t.Fatalf("r.URL.String() = %q, want %q", got, want)
 	}
 }
 
