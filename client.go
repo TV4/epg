@@ -73,6 +73,11 @@ func Date(year int, month time.Month, day int) string {
 	return fmt.Sprintf("%04d-%02d-%02d", year, month, day)
 }
 
+// DateAtTime returns the date string for the provided time.Time
+func DateAtTime(t time.Time) string {
+	return Date(t.Date())
+}
+
 func (c *client) Get(ctx context.Context, country Country, language Language, date string, attributes ...url.Values) (*Response, error) {
 	return c.get(ctx, c.getPath(country, language, date), c.query(attributes))
 }

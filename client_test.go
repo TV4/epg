@@ -90,6 +90,22 @@ func TestDate(t *testing.T) {
 	}
 }
 
+func TestDateAtTime(t *testing.T) {
+	for _, tt := range []struct {
+		time time.Time
+		want string
+	}{
+		{time.Date(1, time.February, 3, 0, 0, 0, 0, time.UTC), "0001-02-03"},
+		{time.Date(2017, time.January, 26, 1, 2, 3, 4, time.UTC), "2017-01-26"},
+	} {
+		t.Run(tt.want, func(t *testing.T) {
+			if got := DateAtTime(tt.time); got != tt.want {
+				t.Fatalf("DateAtTime(tt.time) = %q, want %q", got, tt.want)
+			}
+		})
+	}
+}
+
 func TestGet(t *testing.T) {
 	ts, c := testServerAndClient()
 	defer ts.Close()
