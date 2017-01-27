@@ -22,6 +22,7 @@ type Client interface {
 type client struct {
 	httpClient *http.Client
 	baseURL    *url.URL
+	userAgent  string
 }
 
 // NewClient creates an EPG Client
@@ -34,6 +35,7 @@ func NewClient(options ...func(*client)) Client {
 			Scheme: "https",
 			Host:   "api.cmore.se",
 		},
+		userAgent: "epg/client.go (https://github.com/TV4/epg)",
 	}
 
 	for _, f := range options {
@@ -41,6 +43,13 @@ func NewClient(options ...func(*client)) Client {
 	}
 
 	return c
+}
+
+// HTTPClient changes the *client HTTP client to the provided *http.Client
+func HTTPClient(hc *http.Client) func(*client) {
+	return func(c *client) {
+		c.httpClient = hc
+	}
 }
 
 // BaseURL changes the *client base URL based on the provided rawurl
@@ -52,10 +61,10 @@ func BaseURL(rawurl string) func(*client) {
 	}
 }
 
-// HTTPClient changes the *client HTTP client to the provided *http.Client
-func HTTPClient(hc *http.Client) func(*client) {
+// UserAgent changes the User-Agent used in requests sent by the *client
+func UserAgent(ua string) func(*client) {
 	return func(c *client) {
-		c.httpClient = hc
+		c.userAgent = ua
 	}
 }
 
@@ -137,6 +146,7 @@ func (c *client) request(ctx context.Context, path string, query url.Values) (*h
 	req = req.WithContext(ctx)
 
 	req.Header.Add("Accept", "application/xml")
+	req.Header.Add("User-Agent", c.userAgent)
 
 	return req, nil
 }

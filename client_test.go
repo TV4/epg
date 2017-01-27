@@ -6,7 +6,28 @@ import (
 	"net/http/httptest"
 	"net/url"
 	"testing"
+	"time"
 )
+
+func TestNewClient(t *testing.T) {
+	c, ok := NewClient().(*client)
+
+	if !ok {
+		t.Fatalf("expected *client")
+	}
+
+	if got, want := c.httpClient.Timeout, 20*time.Second; got != want {
+		t.Fatalf("c.httpClient.Timeout = %s, want %s", got, want)
+	}
+
+	if got, want := c.baseURL.String(), "https://api.cmore.se"; got != want {
+		t.Fatalf("c.baseURL.String() = %q, want %q", got, want)
+	}
+
+	if got, want := c.userAgent, "epg/client.go (https://github.com/TV4/epg)"; got != want {
+		t.Fatalf("c.userAgent = %q, want %q", got, want)
+	}
+}
 
 func TestGet(t *testing.T) {
 	ts, c := testServerAndClient()
@@ -61,6 +82,48 @@ func TestGetPeriod(t *testing.T) {
 
 	if got, want := channel.Name, "CanalFilm2"; got != want {
 		t.Fatalf("channel.Name = %q, want %q", got, want)
+	}
+}
+
+func TestHTTPClient(t *testing.T) {
+	hc := &http.Client{Timeout: 5 * time.Second}
+
+	c, ok := NewClient(HTTPClient(hc)).(*client)
+
+	if !ok {
+		t.Fatalf("expected *client")
+	}
+
+	if got, want := c.httpClient.Timeout, 5*time.Second; got != want {
+		t.Fatalf("c.httpClient.Timeout = %s, want %s", got, want)
+	}
+}
+
+func TestBaseURL(t *testing.T) {
+	rawurl := "http://example.com/"
+
+	c, ok := NewClient(BaseURL(rawurl)).(*client)
+
+	if !ok {
+		t.Fatalf("expected *client")
+	}
+
+	if got, want := c.baseURL.String(), rawurl; got != want {
+		t.Fatalf("c.baseURL.String() = %q, want %q", got, want)
+	}
+}
+
+func TestUserAgent(t *testing.T) {
+	ua := "Test-Agent"
+
+	c, ok := NewClient(UserAgent(ua)).(*client)
+
+	if !ok {
+		t.Fatalf("expected *client")
+	}
+
+	if got, want := c.userAgent, ua; got != want {
+		t.Fatalf("c.userAgent = %q, want %q", got, want)
 	}
 }
 
