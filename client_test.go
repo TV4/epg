@@ -132,17 +132,53 @@ func TestGetPeriod(t *testing.T) {
 	}
 
 	if got, want := len(r.Days), 2; got != want {
-		t.Fatalf("r.Days = %d, want %d", got, want)
+		t.Fatalf("len(r.Days) = %d, want %d", got, want)
 	}
 
 	if got, want := len(r.Days[1].Channels), 10; got != want {
-		t.Fatalf("r.Days[0].Channels = %d, want %d", got, want)
+		t.Fatalf("len(r.Days[0].Channels) = %d, want %d", got, want)
 	}
 
 	channel := r.Days[1].Channels[4]
 
 	if got, want := channel.Name, "CanalFilm2"; got != want {
 		t.Fatalf("channel.Name = %q, want %q", got, want)
+	}
+}
+
+func TestGetChannelGroup(t *testing.T) {
+	ts, c := testServerAndClient()
+	defer ts.Close()
+
+	r, err := c.GetChannelGroup(
+		context.Background(),
+		Sweden,
+		Swedish,
+		Date(2017, 1, 27),
+		Date(2017, 1, 27),
+		"27",
+		url.Values{
+			"filter": {"livesports"},
+		},
+	)
+	if err != nil {
+		t.Fatalf("unexpected error %#v", err)
+	}
+
+	if got, want := len(r.Days), 1; got != want {
+		t.Fatalf("r.Days = %d, want %d", got, want)
+	}
+
+	d := r.Day()
+
+	if got, want := len(d.Channels), 9; got != want {
+		t.Fatalf("len(d.Channels) = %d, want %d", got, want)
+	}
+
+	channel := d.Channel(CanalSportSweden)
+
+	if got, want := channel.LogoID, "ec7d2da1-5b0d-4135-ac54-32149414c557"; got != want {
+		t.Fatalf("channel.LogoID = %q, want %q", got, want)
 	}
 }
 
@@ -174,10 +210,12 @@ func testServerAndClient() (*httptest.Server, Client) {
 		func(w http.ResponseWriter, r *http.Request) {
 			w.Header().Set("Content-Type", "application/xml; charset=utf-8")
 
-			switch r.URL.Path {
+			switch r.URL.String() {
 			case "/epg/se/sv/2017-01-25":
 				w.Write(swedishFullDayEPGResponseXML)
-			case "/epg/dk/da/2017-01-26/2017-01-27":
+			case "/epg/se/sv/2017-01-27/2017-01-27/27?filter=livesports":
+				w.Write(swedishLiveSportsEPGResponseXML)
+			case "/epg/dk/da/2017-01-26/2017-01-27?genre=drama":
 				w.Write(danishTwoDaysDramaEPGResponseXML)
 			default:
 				w.Write(emptyEPGResponseXML)
