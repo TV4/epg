@@ -9,6 +9,226 @@ var emptyEPGResponseXML = []byte(`<?xml version="1.0"?>
 
 // Data retrieved like this:
 //
+//     curl -H "Accept: application/xml" http://api.cmore.se/epg/fi/fi/2017-01-27/2017-01-27/12 | xmllint --format - | pbcopy
+//
+var finnishChannel12ResponseXML = []byte(`<?xml version="1.0"?>
+<Epg xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" FromDate="2017-01-27T00:00:00" UntilDate="2017-01-27T00:00:00">
+  <Day BroadcastDate="2017-01-27T00:00:00">
+    <Channel ChannelId="12" Name="CanalHD" Title="C More First HD" LogoId="6636a32b-629c-45a9-a546-505d5cfe8d33" LogoDarkId="1a681ce4-6b0a-475c-a518-9668e025c6de" LogoLightId="00000000-0000-0000-0000-000000000000" IsHd="false">
+      <Schedule ScheduleId="208763" NextStart="2017-01-27T09:35:00" CalendarDate="2017-01-27T08:00:00" IsPremiere="false" IsDubbed="false" Type="Tape" AlsoAvailableInHD="true" AlsoAvailableIn3D="false" Is3D="false" IsPPV="false">
+        <Program ProgramId="78360" Title="Sommeren '92" OriginalTitle="Sommeren 92" Genre="Draama" GenreKey="" FirstCalendarDate="2016-09-12T21:00:00" LastCalendarDate="2017-01-27T07:00:00" VodStart="2016-09-11T00:00:00" VodEnd="2017-09-10T00:00:00" Duration="89" ContentSourceId="0" ProductionYear="2015" Rating="TURQUOISE" Actors="Ulrich Thomsen, Mikkel Boe F&#xF8;lsgaard, Lene Maria Christensen" Directors="Kasper Barfoed" Class="Regular" Type="SingleProgram" Category="Film" IsDubbedVersionAvailable="false" Vod="true" OTTBlackout="false" IsDubbed="false">
+          <Resources>
+            <Image Id="f16a9f48-b1d4-4c5a-adaf-b9537491cbce" Category="Primary"/>
+            <Image Id="db247816-3ebd-4cac-b5ac-486f64127cdb" Category="Cover"/>
+          </Resources>
+          <Synopsis>
+            <ExtraShort>Tositapahtumiin perustuva draama (2015), p&#xE4;&#xE4;osassa Ulrich Thomsen.</ExtraShort>
+            <Short>Tositapahtumiin perustuva Ulrich Thomsenin t&#xE4;hditt&#xE4;m&#xE4; urheiludraama Tanskan jalkapallomaajoukkueesta, joka vastoin odotuksia voitti 1992 EM-kisat.</Short>
+            <Medium>Kun Tanskan jalkapallomaajoukkue ei p&#xE4;&#xE4;se mukaan Ruotsin EM-kisoihin 1992, syytet&#xE4;&#xE4;n fiaskosta kapteenia Richard M&#xF8;ller Nielseni&#xE4;. Mutta kun Jugoslavia hyl&#xE4;t&#xE4;&#xE4;n, saavat tanskalaiset uuden mahdollisuuden osallistua kisoihin. Mit&#xE4; siit&#xE4; seuraa, on urheiluhistoriaa.</Medium>
+            <Long>Kun Tanskan jalkapallomaajoukkue ei p&#xE4;&#xE4;se mukaan Ruotsin EM-kisoihin 1992, syytet&#xE4;&#xE4;n fiaskosta kapteenia Richard M&#xF8;ller Nielseni&#xE4;. Mutta kun Jugoslavia hyl&#xE4;t&#xE4;&#xE4;n, saavat tanskalaiset uuden mahdollisuuden osallistua kisoihin. Mit&#xE4; siit&#xE4; seuraa, on urheiluhistoriaa.</Long>
+            <Facts>Draama, 2015.</Facts>
+          </Synopsis>
+        </Program>
+      </Schedule>
+      <Schedule ScheduleId="208764" PlayAssetId1="2175475" NextStart="2017-01-27T11:05:00" CalendarDate="2017-01-27T09:35:00" IsPremiere="false" IsDubbed="false" Type="Tape" AlsoAvailableInHD="true" AlsoAvailableIn3D="false" Is3D="false" IsPPV="false">
+        <Program ProgramId="16083" Title="Nacho Libre" OriginalTitle="Nacho Libre" Genre="Komedia" GenreKey="Comedy" FirstCalendarDate="2012-03-07T21:00:00" LastCalendarDate="2017-01-27T08:35:00" VodStart="2016-04-07T00:00:00" VodEnd="2016-12-31T00:00:00" Duration="88" ContentSourceId="0" ProductionYear="2006" Rating="BLUE" Actors="Jack Black, Ana de la Reguera, H&#xE9;ctor Jim&#xE9;nez, Peter Stormare" Directors="Jared Hess" Class="Regular" Type="SingleProgram" Category="Film" IsDubbedVersionAvailable="false" Vod="true" OTTBlackout="false" IsDubbed="false">
+          <Resources>
+            <Image Id="e334a468-3581-49b7-a492-9c00d106a243" Category="Primary"/>
+            <Image Id="7c64861a-986b-47db-bb88-5a9d1068c6eb" Category="Cover"/>
+          </Resources>
+          <Synopsis>
+            <ExtraShort>Komedia. Jack Black.</ExtraShort>
+            <Short>Jack Black t&#xE4;hditt&#xE4;&#xE4; t&#xE4;t&#xE4; komediaa meksikolaisluostarin kokista, joka haluaa taistelijaksi.</Short>
+            <Medium>Nacho on nuori mies, joka varttui Meksikossa sijaitsevassa luostarissa, jossa h&#xE4;n nyky&#xE4;&#xE4;n ty&#xF6;skentelee kokkina. H&#xE4;n p&#xE4;&#xE4;tt&#xE4;&#xE4; pelastaa luostarin vararikolta osallistumalla painiturnaukseen. Nacho ei kuitenkaan ehk&#xE4; ole aivan oikea mies t&#xE4;llaisiin projekteihin. </Medium>
+            <Long>Nacho on nuori mies, joka varttui Meksikossa sijaitsevassa luostarissa, jossa h&#xE4;n nyky&#xE4;&#xE4;n ty&#xF6;skentelee kokkina. H&#xE4;n p&#xE4;&#xE4;tt&#xE4;&#xE4; pelastaa luostarin vararikolta osallistumalla painiturnaukseen. Nacho ei kuitenkaan ehk&#xE4; ole aivan oikea mies t&#xE4;llaisiin projekteihin. </Long>
+            <Facts>Komedia, 2006.</Facts>
+          </Synopsis>
+        </Program>
+      </Schedule>
+      <Schedule ScheduleId="208765" NextStart="2017-01-27T11:35:00" CalendarDate="2017-01-27T11:05:00" IsPremiere="false" IsDubbed="false" Type="Tape" AlsoAvailableInHD="false" AlsoAvailableIn3D="false" Is3D="false" IsPPV="false">
+        <Program ProgramId="78175" Title="Close Up" OriginalTitle="Jennifer Lopez" EpisodeTitle="Jennifer Lopez" SeriesTitle="Close Up" Genre="" GenreKey="" SeasonNumber="2" EpisodeNumber="12" NumberOfEpisodes="31" SeriesId="68707" FirstCalendarDate="2016-09-04T05:30:00" LastCalendarDate="2016-11-04T11:30:00" VodStart="0001-01-01T00:00:00" VodEnd="0001-01-01T00:00:00" Duration="26" ContentSourceId="0" ProductionYear="2014" Rating="BLUE" Class="Regular" Type="EpisodeProgram" Category="Magazine" IsDubbedVersionAvailable="false" Vod="false" OTTBlackout="false" IsDubbed="false">
+          <Resources>
+            <Image Id="9f3b9631-4025-4a4f-a0fe-10ba3e153e2b" Category="Primary"/>
+          </Resources>
+          <Synopsis>
+            <Short>Jakso 12/31. Jennifer Lopez</Short>
+            <Long>Jakso 12/31. Jennifer Lopez. </Long>
+            <Facts>Jakso 12/31.</Facts>
+          </Synopsis>
+        </Program>
+      </Schedule>
+      <Schedule ScheduleId="208766" PlayAssetId1="3463692" NextStart="2017-01-27T13:20:00" CalendarDate="2017-01-27T11:35:00" IsPremiere="false" IsDubbed="false" Type="Tape" AlsoAvailableInHD="true" AlsoAvailableIn3D="false" Is3D="false" IsPPV="false">
+        <Program ProgramId="74828" Title="Think Like a Man Too" OriginalTitle="Think Like a Man Too" Genre="Romanttinen komedia" GenreKey="" FirstCalendarDate="2016-08-17T21:00:00" LastCalendarDate="2017-01-27T10:35:00" VodStart="2016-08-17T00:00:00" VodEnd="2017-02-12T00:00:00" Duration="101" ContentSourceId="0" ProductionYear="2014" Rating="BLUE" Actors="Michael Ealy, Taraji P. Henson, Meagan Good, Regina Hall, Terrence Jenkins" Directors="Tim Story" Class="Regular" Type="SingleProgram" Category="Film" IsDubbedVersionAvailable="false" Vod="true" OTTBlackout="false" IsDubbed="false">
+          <Resources>
+            <Image Id="b3d437c4-abf1-41f5-966e-59836ee6b822" Category="Primary"/>
+            <Image Id="3d52f595-d1f0-411d-a2cf-b30e4b220b6d" Category="Cover"/>
+          </Resources>
+          <Synopsis>
+            <ExtraShort>Komedia (USA 2014), p&#xE4;&#xE4;osissa Kevin Hart ja Regina Hill.</ExtraShort>
+            <Short>Amerikkalainen romanttinen komedia kaveruksista, jotka matkustavat h&#xE4;ihin Las Vegasiin ja joutuvat hulluihin seikkailuihin. P&#xE4;&#xE4;osassa Kevin Hart.</Short>
+            <Medium>Amerikkalainen romanttinen komedia kaveruksista, jotka matkustavat h&#xE4;ihin Las Vegasiin ja joutuvat hulluihin seikkailuihin. P&#xE4;&#xE4;osassa Kevin Hart.</Medium>
+            <Long>Amerikkalainen romanttinen komedia kaveruksista, jotka matkustavat h&#xE4;ihin Las Vegasiin ja joutuvat hulluihin seikkailuihin. P&#xE4;&#xE4;osassa Kevin Hart.</Long>
+            <Facts>Romanttinen komedia, 2014.</Facts>
+          </Synopsis>
+        </Program>
+      </Schedule>
+      <Schedule ScheduleId="208767" PlayAssetId1="3289877" NextStart="2017-01-27T14:50:00" CalendarDate="2017-01-27T13:20:00" IsPremiere="false" IsDubbed="false" Type="Tape" AlsoAvailableInHD="true" AlsoAvailableIn3D="false" Is3D="false" IsPPV="false">
+        <Program ProgramId="69431" Title="Teenwolf eli ihmissusi murrosi&#xE4;ss&#xE4;" OriginalTitle="Teen Wolf" Genre="Komedia" GenreKey="Comedy" FirstCalendarDate="2016-03-29T00:40:00" LastCalendarDate="2017-01-27T12:20:00" VodStart="0001-01-01T00:00:00" VodEnd="0001-01-01T00:00:00" Duration="88" ContentSourceId="0" ProductionYear="1985" Rating="BLUE" Actors="Michael J. Fox, James Hampton, Susan Ursitti" Directors="Rod Daniel" Class="Regular" Type="SingleProgram" Category="Film" IsDubbedVersionAvailable="false" Vod="false" OTTBlackout="false" IsDubbed="false">
+          <Resources>
+            <Image Id="e6630177-e20a-4ea5-a497-cf0b3118f5d8" Category="Primary"/>
+            <Image Id="6a91bbbd-d7eb-4b91-97b8-375335ae6f43" Category="Cover"/>
+          </Resources>
+          <Synopsis>
+            <ExtraShort>Komedia (USA 1985), p&#xE4;&#xE4;osissa Michael J Fox ja James Hampton. </ExtraShort>
+            <Short>Michael J Fox on high schoolin oppilas Scott, joka kaikkien tavallisten teiniongelmien lis&#xE4;ksi tajuaa, ett&#xE4; h&#xE4;nell&#xE4; on ihmissuden geenej&#xE4;.</Short>
+            <Medium>Michael J Fox on high schoolin oppilas Scott, joka kaikkien tavallisten teiniongelmien lis&#xE4;ksi tajuaa, ett&#xE4; h&#xE4;nell&#xE4; on ihmissuden geenej&#xE4;.</Medium>
+            <Long>Michael J Fox on high schoolin oppilas Scott, joka kaikkien tavallisten teiniongelmien lis&#xE4;ksi tajuaa, ett&#xE4; h&#xE4;nell&#xE4; on ihmissuden geenej&#xE4;.</Long>
+            <Facts>Komedia, 1985.</Facts>
+          </Synopsis>
+        </Program>
+      </Schedule>
+      <Schedule ScheduleId="208768" NextStart="2017-01-27T16:45:00" CalendarDate="2017-01-27T14:50:00" IsPremiere="false" IsDubbed="false" Type="Tape" AlsoAvailableInHD="true" AlsoAvailableIn3D="false" Is3D="false" IsPPV="false">
+        <Program ProgramId="79723" Title="Pawn sacrifice - kohtalokas siirto" OriginalTitle="Pawn Sacrifice" Genre="Draamatrilleri" GenreKey="" FirstCalendarDate="2016-10-11T14:55:00" LastCalendarDate="2017-01-27T13:50:00" VodStart="2016-10-14T00:00:00" VodEnd="2017-09-30T00:00:00" Duration="110" ContentSourceId="0" ProductionYear="2014" Rating="TURQUOISE" Actors="Tobey Maguire, Liev Schreiber, Peter Sarsgaard" Directors="Edward Zwick" Class="Regular" Type="SingleProgram" Category="Film" IsDubbedVersionAvailable="false" Vod="true" OTTBlackout="false" IsDubbed="false">
+          <Resources>
+            <Image Id="27aaf8a9-ab33-4218-851b-b57ac428f9fd" Category="Primary"/>
+            <Image Id="2e42bd5c-0de7-479a-867b-982e66f39e16" Category="Cover"/>
+          </Resources>
+          <Synopsis>
+            <ExtraShort>Draamatrilleri (USA 2015), p&#xE4;&#xE4;osassa Tobey Maguire.</ExtraShort>
+            <Short>Tobey Maguiren t&#xE4;hditt&#xE4;m&#xE4; amerikkalainen draamatrilleri shakkimestari Bobby Fischerin otteluista Boris Spasskya vastaan kylm&#xE4;n sodan aikana.</Short>
+            <Medium>Tobey Maguiren t&#xE4;hditt&#xE4;m&#xE4; amerikkalainen draamatrilleri shakkimestari Bobby Fischerin otteluista Boris Spasskya vastaan kylm&#xE4;n sodan aikana. </Medium>
+            <Long>Tobey Maguiren t&#xE4;hditt&#xE4;m&#xE4; amerikkalainen draamatrilleri shakkimestari Bobby Fischerin otteluista Boris Spasskya vastaan kylm&#xE4;n sodan aikana. </Long>
+            <Facts>Draamatrilleri, 2014.</Facts>
+          </Synopsis>
+        </Program>
+      </Schedule>
+      <Schedule ScheduleId="208769" NextStart="2017-01-27T18:20:00" CalendarDate="2017-01-27T16:45:00" IsPremiere="false" IsDubbed="false" Type="Tape" AlsoAvailableInHD="true" AlsoAvailableIn3D="false" Is3D="false" IsPPV="false">
+        <Program ProgramId="74857" Title="Love is Strange" OriginalTitle="Love is Strange" Genre="Draamakomedia" GenreKey="" FirstCalendarDate="2016-11-06T21:00:00" LastCalendarDate="2017-01-21T09:15:00" VodStart="2016-11-06T00:00:00" VodEnd="2017-04-28T00:00:00" Duration="90" ContentSourceId="0" ProductionYear="2014" Rating="GREEN" Actors="John Lithgow, Alfred Molina, Marisa Tomei" Directors="Ira Sachs" Class="Regular" Type="SingleProgram" Category="Film" IsDubbedVersionAvailable="false" Vod="true" OTTBlackout="false" IsDubbed="false">
+          <Resources>
+            <Image Id="de71d11d-ea31-492f-87bf-5633e41a1dfb" Category="Primary"/>
+            <Image Id="7728a78d-db5b-4c72-8d02-e2bdcadea60b" Category="Cover"/>
+          </Resources>
+          <Synopsis>
+            <ExtraShort>Draamakomedia (USA 2014), p&#xE4;&#xE4;osissa Alfred Molina ja John Lithgow.</ExtraShort>
+            <Short>Kiitetty draamakomedia i&#xE4;kk&#xE4;&#xE4;st&#xE4; homoparista (Alfred Molina ja John Lithgow), jonka on asuttava erill&#xE4;&#xE4;n menetetty&#xE4;&#xE4;n asuntonsa.</Short>
+            <Medium>Kiitetty draamakomedia i&#xE4;kk&#xE4;&#xE4;st&#xE4; homoparista (Alfred Molina ja John Lithgow), jonka on asuttava erill&#xE4;&#xE4;n menetetty&#xE4;&#xE4;n asuntonsa.</Medium>
+            <Long>Kiitetty draamakomedia i&#xE4;kk&#xE4;&#xE4;st&#xE4; homoparista (Alfred Molina ja John Lithgow), jonka on asuttava erill&#xE4;&#xE4;n menetetty&#xE4;&#xE4;n asuntonsa.</Long>
+            <Facts>Draamakomedia, 2014.</Facts>
+          </Synopsis>
+        </Program>
+      </Schedule>
+      <Schedule ScheduleId="208770" NextStart="2017-01-27T20:05:00" CalendarDate="2017-01-27T18:20:00" IsPremiere="false" IsDubbed="false" Type="Tape" AlsoAvailableInHD="true" AlsoAvailableIn3D="false" Is3D="false" IsPPV="false">
+        <Program ProgramId="77821" Title="Seitsem&#xE4;n siet&#xE4;m&#xE4;tt&#xF6;m&#xE4;n pitk&#xE4;&#xE4; p&#xE4;iv&#xE4;&#xE4;" OriginalTitle="This Is Where I Leave You" Genre="Draamakomedia" GenreKey="" FirstCalendarDate="2016-08-12T18:10:00" LastCalendarDate="2017-01-27T17:20:00" VodStart="2016-08-12T00:00:00" VodEnd="2017-02-08T00:00:00" Duration="99" ContentSourceId="0" ProductionYear="2014" Rating="BLUE" Actors="Jason Bateman, Tina Fey, Adam Driver, Rose Byrne, Corey Stoll" Directors="Shawn Levy" Class="Regular" Type="SingleProgram" Category="Film" IsDubbedVersionAvailable="false" Vod="true" OTTBlackout="false" IsDubbed="false">
+          <Resources>
+            <Image Id="049e2e6f-52df-4a95-bf28-3f6b944c57ce" Category="Primary"/>
+            <Image Id="0dac308e-18c7-4998-b5ab-b0e68d4be0e5" Category="Cover"/>
+          </Resources>
+          <Synopsis>
+            <ExtraShort>Draamakomedia (USA 2014), p&#xE4;&#xE4;osissa Jason Bateman ja Tina Fey.</ExtraShort>
+            <Short>Amerikkalainen draamakomedia nelj&#xE4;st&#xE4; aikuisesta sisaruksesta (mm. Jason Bateman ja Tina Fey), jotka tapaavat is&#xE4;ns&#xE4; hautajaisissa.</Short>
+            <Medium>Amerikkalainen draamakomedia nelj&#xE4;st&#xE4; aikuisesta sisaruksesta (mm. Jason Bateman ja Tina Fey), jotka tapaavat is&#xE4;ns&#xE4; hautajaisissa.</Medium>
+            <Long>Amerikkalainen draamakomedia nelj&#xE4;st&#xE4; aikuisesta sisaruksesta (mm. Jason Bateman ja Tina Fey), jotka tapaavat is&#xE4;ns&#xE4; hautajaisissa.</Long>
+            <Facts>Draamakomedia, 2014.</Facts>
+          </Synopsis>
+        </Program>
+      </Schedule>
+      <Schedule ScheduleId="208771" NextStart="2017-01-27T22:00:00" CalendarDate="2017-01-27T20:05:00" IsPremiere="false" IsDubbed="false" Type="Tape" AlsoAvailableInHD="true" AlsoAvailableIn3D="false" Is3D="false" IsPPV="false">
+        <Program ProgramId="74854" Title="Chef" OriginalTitle="Chef" Genre="Draamakomedia" GenreKey="" FirstCalendarDate="2016-09-30T21:00:00" LastCalendarDate="2017-01-27T19:05:00" VodStart="2016-09-30T00:00:00" VodEnd="2017-03-26T00:00:00" Duration="110" ContentSourceId="0" ProductionYear="2014" Rating="GREEN" Actors="Jon Favreau, Sofia Vergara, John Leguizamo" Directors="Jon Favreau" Class="Regular" Type="SingleProgram" Category="Film" IsDubbedVersionAvailable="false" Vod="true" OTTBlackout="false" IsDubbed="false">
+          <Resources>
+            <Image Id="48519644-c0e2-448a-8806-5dd27b8cd0e6" Category="Primary"/>
+            <Image Id="770dd87f-992e-452d-91b7-7a670cd77a9d" Category="Cover"/>
+          </Resources>
+          <Synopsis>
+            <ExtraShort>Draamakomedia (USA 2014), p&#xE4;&#xE4;osissa Jon Favreau ja Sofia Vergara.</ExtraShort>
+            <Short>Keski-i&#xE4;n kriisiss&#xE4; oleva julkkikokki luopuu huippuravintolasta ja l&#xE4;htee uusiin kulinaarisiin seikkailuihin food truck -bisneksess&#xE4;.</Short>
+            <Medium>Keski-i&#xE4;n kriisiss&#xE4; oleva julkkikokki luopuu huippuravintolasta ja l&#xE4;htee uusiin kulinaarisiin seikkailuihin food truck -bisneksess&#xE4;.</Medium>
+            <Long>Keski-i&#xE4;n kriisiss&#xE4; oleva julkkikokki luopuu huippuravintolasta ja l&#xE4;htee uusiin kulinaarisiin seikkailuihin food truck -bisneksess&#xE4;.</Long>
+            <Facts>Draamakomedia, 2014.</Facts>
+          </Synopsis>
+        </Program>
+      </Schedule>
+      <Schedule ScheduleId="208772" PlayAssetId1="3655612" NextStart="2017-01-28T00:15:00" CalendarDate="2017-01-27T22:00:00" IsPremiere="true" IsDubbed="false" Type="Tape" AlsoAvailableInHD="true" AlsoAvailableIn3D="false" Is3D="false" IsPPV="false">
+        <Program ProgramId="83070" Title="Blackhat" OriginalTitle="Blackhat" Genre="Trilleri" GenreKey="" FirstCalendarDate="2017-01-27T21:00:00" LastCalendarDate="2017-01-28T21:55:00" VodStart="2017-01-26T00:00:00" VodEnd="2017-06-30T00:00:00" Duration="128" ContentSourceId="0" ProductionYear="2015" Rating="ORANGE" Actors="Chris Hemsworth, Viola Davis, Tang Wei, Ritchie Coster" Directors="Michael Mann" Class="Regular" Type="SingleProgram" Category="Film" IsDubbedVersionAvailable="false" Vod="true" OTTBlackout="false" IsDubbed="false">
+          <Resources>
+            <Image Id="94538b72-850b-47d0-9c83-894f8eb1dd63" Category="Primary"/>
+            <Image Id="02806312-150f-4198-9454-e431191d363b" Category="Cover"/>
+          </Resources>
+          <Synopsis>
+            <ExtraShort>Trilleri (USA 2015), ohjaus Michael Mann, p&#xE4;&#xE4;osassa Chris Hemsworth.</ExtraShort>
+            <Short>Michael Mannin ("Heat") ohjaama trilleri hakkerista (Chris Hemsworth), joka palkataan j&#xE4;ljitt&#xE4;m&#xE4;&#xE4;n kyberterroristi.</Short>
+            <Medium>Michael Mannin ("Heat") ohjaama trilleri hakkerista (Chris Hemsworth), joka palkataan j&#xE4;ljitt&#xE4;m&#xE4;&#xE4;n kyberterroristi.</Medium>
+            <Long>Michael Mannin ("Heat") ohjaama trilleri hakkerista (Chris Hemsworth), joka palkataan j&#xE4;ljitt&#xE4;m&#xE4;&#xE4;n kyberterroristi.</Long>
+            <Facts>Ensi-ilta! Trilleri, 2015.</Facts>
+          </Synopsis>
+        </Program>
+      </Schedule>
+      <Schedule ScheduleId="208773" PlayAssetId1="3590633" NextStart="2017-01-28T02:30:00" CalendarDate="2017-01-28T00:15:00" IsPremiere="false" IsDubbed="false" Type="Tape" AlsoAvailableInHD="true" AlsoAvailableIn3D="false" Is3D="false" IsPPV="false">
+        <Program ProgramId="82530" Title="Murtumaton" OriginalTitle="Unbroken" Genre="Draama" GenreKey="" FirstCalendarDate="2016-12-18T21:00:00" LastCalendarDate="2017-01-27T23:15:00" VodStart="2016-12-16T00:00:00" VodEnd="2017-05-31T00:00:00" Duration="131" ContentSourceId="0" ProductionYear="2014" Rating="ORANGE" Actors="Jack O'Connell, Domhnall Gleeson, Garrett Hedlund, Miyavi" Directors="Angelina Jolie" Class="Regular" Type="SingleProgram" Category="Film" IsDubbedVersionAvailable="false" Vod="true" OTTBlackout="false" IsDubbed="false">
+          <Resources>
+            <Image Id="175bf845-0fb2-48de-8d60-1486942aa5f5" Category="Primary"/>
+            <Image Id="b00420db-16bd-4bd2-9056-3d6f2addb604" Category="Cover"/>
+          </Resources>
+          <Synopsis>
+            <ExtraShort>Draama (USA 2014), ohjaus Angelina Jolie.</ExtraShort>
+            <Short>Angelina Jolien tosipohjainen draama olympiaurheilija Louis Zamperinin tapahtumarikkaasta el&#xE4;m&#xE4;st&#xE4; ja haaksirikosta toisen maailmansodan aikana.</Short>
+            <Medium>Angelina Jolien tosipohjainen draama olympiaurheilija Louis Zamperinin tapahtumarikkaasta el&#xE4;m&#xE4;st&#xE4; ja haaksirikosta toisen maailmansodan aikana.</Medium>
+            <Long>Angelina Jolien tosipohjainen draama olympiaurheilija Louis Zamperinin tapahtumarikkaasta el&#xE4;m&#xE4;st&#xE4; ja haaksirikosta toisen maailmansodan aikana.</Long>
+            <Facts>Draama, 2014.</Facts>
+          </Synopsis>
+        </Program>
+      </Schedule>
+      <Schedule ScheduleId="208774" NextStart="2017-01-28T04:05:00" CalendarDate="2017-01-28T02:30:00" IsPremiere="false" IsDubbed="false" Type="Tape" AlsoAvailableInHD="true" AlsoAvailableIn3D="false" Is3D="false" IsPPV="false">
+        <Program ProgramId="78363" Title="American Ultra" OriginalTitle="American Ultra" Genre="Tomintakomedia" GenreKey="" FirstCalendarDate="2016-09-09T21:00:00" LastCalendarDate="2017-01-28T01:30:00" VodStart="2016-09-08T00:00:00" VodEnd="2017-08-31T00:00:00" Duration="91" ContentSourceId="0" ProductionYear="2015" Rating="ORANGE" Actors="Jesse Eisenberg, Kristen Stewart, Topher Grace" Directors="Nima Nourizadeh" Class="Regular" Type="SingleProgram" Category="Film" IsDubbedVersionAvailable="false" Vod="true" OTTBlackout="false" IsDubbed="false">
+          <Resources>
+            <Image Id="f897f29c-4a8b-4a6b-9975-12e7bd69e634" Category="Primary"/>
+            <Image Id="55513d79-c059-463b-a273-c4e54c2ccc9d" Category="Cover"/>
+          </Resources>
+          <Synopsis>
+            <ExtraShort>Toimintakomedia (USA 2015), p&#xE4;&#xE4;osassa Jesse Eisenberg.</ExtraShort>
+            <Short>Amerikkalainen toimintakomedia tyhj&#xE4;ntoimittajanuorukaisesta (Jesse Eisenberg), joka on salaa koulutettu CIA:n tappavaksi agentiksi.</Short>
+            <Medium>Amerikkalainen toimintakomedia tyhj&#xE4;ntoimittajanuorukaisesta (Jesse Eisenberg), joka on salaa koulutettu CIA:n tappavaksi agentiksi.</Medium>
+            <Long>Amerikkalainen toimintakomedia tyhj&#xE4;ntoimittajanuorukaisesta (Jesse Eisenberg), joka on salaa koulutettu CIA:n tappavaksi agentiksi.</Long>
+            <Facts>Tomintakomedia, 2015.</Facts>
+          </Synopsis>
+        </Program>
+      </Schedule>
+      <Schedule ScheduleId="208775" PlayAssetId1="3403181" NextStart="2017-01-28T06:20:00" CalendarDate="2017-01-28T04:05:00" IsPremiere="false" IsDubbed="false" Type="Tape" AlsoAvailableInHD="true" AlsoAvailableIn3D="false" Is3D="false" IsPPV="false">
+        <Program ProgramId="57614" Title="My&#xF6;s maan p&#xE4;&#xE4;ll&#xE4;" OriginalTitle="S&#xE5; ock p&#xE5; jorden" Genre="Draama" GenreKey="" FirstCalendarDate="2016-07-09T21:00:00" LastCalendarDate="2017-01-28T03:05:00" VodStart="2016-07-07T00:00:00" VodEnd="2017-07-03T00:00:00" Duration="129" ContentSourceId="0" ProductionYear="2015" Rating="BLUE" Actors="Frida Hallgren, Niklas Falk, Lennart J&#xE4;hkel, Ylva L&#xF6;&#xF6;f" Directors="Kay Pollak" Class="Regular" Type="SingleProgram" Category="Film" IsDubbedVersionAvailable="false" Vod="true" OTTBlackout="false" IsDubbed="false">
+          <Resources>
+            <Image Id="1b862f74-0364-4378-a54b-90d7cec9ed1f" Category="Primary"/>
+            <Image Id="d4d0bd02-1dc2-403a-af06-bfb738114525" Category="Cover"/>
+          </Resources>
+          <Synopsis>
+            <ExtraShort>Draama (Ruotsi 2015), p&#xE4;&#xE4;osissa Frida Hallgren ja Niklas Falk.</ExtraShort>
+            <Short>Jatko-osassa yhdelle ruotsalaisen elokuvan suurimmista menestystarinoista tapaamme uudelleen norlantilaisen Ljus&#xE5;kerin kuoron ja sen l&#xE4;hipiirin.</Short>
+            <Medium>Jatko-osassa yhdelle ruotsalaisen elokuvan suurimmista menestystarinoista tapaamme uudelleen norlantilaisen Ljus&#xE5;kerin kuoron ja sen l&#xE4;hipiirin.</Medium>
+            <Long>Jatko-osassa yhdelle ruotsalaisen elokuvan suurimmista menestystarinoista tapaamme uudelleen norlantilaisen Ljus&#xE5;kerin kuoron ja sen l&#xE4;hipiirin.</Long>
+            <Facts>Draama, 2015.</Facts>
+          </Synopsis>
+        </Program>
+      </Schedule>
+      <Schedule ScheduleId="209299" NextStart="2017-01-28T07:40:00" CalendarDate="2017-01-28T06:20:00" IsPremiere="false" IsDubbed="false" Type="Tape" AlsoAvailableInHD="true" AlsoAvailableIn3D="false" Is3D="false" IsPPV="false">
+        <Program ProgramId="69238" Title="The Last Season" OriginalTitle="The Last Season" Genre="Dokumenttielokuva" GenreKey="Documentary" FirstCalendarDate="2015-11-02T22:40:00" LastCalendarDate="2017-01-23T05:45:00" VodStart="2015-11-01T00:00:00" VodEnd="2017-01-31T00:00:00" Duration="77" ContentSourceId="0" ProductionYear="2014" Rating="ORANGE" Actors="Roger Higgins, Kouy Loch" Directors="Sara Dosa" Class="Regular" Type="SingleProgram" Category="Film" IsDubbedVersionAvailable="false" Vod="true" OTTBlackout="false" IsDubbed="false">
+          <Resources>
+            <Image Id="5c54da29-2308-403e-8cad-62f519506aec" Category="Primary"/>
+            <Image Id="752c6dab-9938-48d1-a4c1-83afc499d148" Category="Cover"/>
+          </Resources>
+          <Synopsis>
+            <ExtraShort>Dokumenttielokuva (USA 2014), ohjaus Sara Dosa.</ExtraShort>
+            <Short>Koskettava dokumentti erilaisista miehist&#xE4;, joilla on yhteiset sota-arvet. He rakentavat ep&#xE4;tavallisen yst&#xE4;vyyden mets&#xE4;st&#xE4;ess&#xE4;&#xE4;n harvinaisia sieni&#xE4;.</Short>
+            <Medium>Koskettava dokumentti erilaisista miehist&#xE4;, joilla on yhteiset sota-arvet. He rakentavat ep&#xE4;tavallisen yst&#xE4;vyyden mets&#xE4;st&#xE4;ess&#xE4;&#xE4;n harvinaisia sieni&#xE4;.</Medium>
+            <Long>Koskettava dokumentti erilaisista miehist&#xE4;, joilla on yhteiset sota-arvet. He rakentavat ep&#xE4;tavallisen yst&#xE4;vyyden mets&#xE4;st&#xE4;ess&#xE4;&#xE4;n harvinaisia sieni&#xE4;.</Long>
+            <Facts>Dokumenttielokuva, 2014.</Facts>
+          </Synopsis>
+        </Program>
+      </Schedule>
+    </Channel>
+  </Day>
+</Epg>
+`)
+
+// Data retrieved like this:
+//
 //     curl -H "Accept: application/xml" "https://api.cmore.se/epg/dk/da/2017-01-26/2017-01-27?genre=Drama" | xmllint --format - | pbcopy
 //
 var danishTwoDaysDramaEPGResponseXML = []byte(`<?xml version="1.0"?>
