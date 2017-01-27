@@ -463,6 +463,110 @@ var danishTwoDaysDramaEPGResponseXML = []byte(`<?xml version="1.0"?>
 
 // Data retrieved like this:
 //
+//     curl -H "Accept: application/xml" 'http://api.cmore.se/epg/se/sv/2017-01-27/2017-01-27/CMoreSportSE?filter=livesports' | xmllint --format - | pbcopy
+//
+var swedishLiveSportsEPGResponseXML = []byte(`<?xml version="1.0"?>
+<Epg xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" FromDate="2017-01-27T00:00:00" UntilDate="2017-01-27T00:00:00">
+  <Day BroadcastDate="2017-01-27T00:00:00">
+    <Channel ChannelId="28" Name="CanalSportSweden" Title="C More Sport" LogoId="ec7d2da1-5b0d-4135-ac54-32149414c557" LogoDarkId="76c2064a-54cc-49e6-a3ee-492cffd07cfd" LogoLightId="00000000-0000-0000-0000-000000000000" IsHd="false">
+      <Schedule ScheduleId="253312" NextStart="2017-01-27T19:00:00" CalendarDate="2017-01-27T18:45:00" IsPremiere="false" IsDubbed="false" Type="Live" AlsoAvailableInHD="false" AlsoAvailableIn3D="false" Is3D="false" IsPPV="false">
+        <Program ProgramId="70635" Title="Hockeyallsvenskan studio" OriginalTitle="Epi#001:Ishockey: HockeyAllsvenskan Studio" SeriesTitle="Hockeyallsvenskan studio" Genre="Ishockey" GenreKey="" EpisodeNumber="1" NumberOfEpisodes="50" SeriesId="71398" FirstCalendarDate="2015-09-11T18:50:00" LastCalendarDate="2017-03-28T21:40:00" VodStart="0001-01-01T00:00:00" VodEnd="0001-01-01T00:00:00" Duration="12" ContentSourceId="0" Rating="Unrated" Class="Regular" Type="EpisodeProgram" Category="Studio" IsDubbedVersionAvailable="false" Vod="false" OTTBlackout="false" IsDubbed="false">
+          <Resources>
+            <Image Id="15f8fe6d-396e-47c4-a3f3-b1a3774ef197" Category="Primary"/>
+          </Resources>
+          <Synopsis>
+            <Short>Del 1/50.</Short>
+            <Long>Direkts&#xE4;ndning fr&#xE5;n C More-studion.</Long>
+            <Facts>Del 1/50.</Facts>
+          </Synopsis>
+        </Program>
+      </Schedule>
+      <Schedule ScheduleId="253313" PlayAssetId1="3648732" NextStart="2017-01-27T21:25:00" CalendarDate="2017-01-27T19:00:00" IsPremiere="false" IsDubbed="false" Type="Live" AlsoAvailableInHD="true" AlsoAvailableIn3D="false" Is3D="false" IsPPV="false">
+        <Program ProgramId="81294" Title="Ishockey: HockeyAllsvenskan 16/17: Karlskoga - Mora" OriginalTitle="Karlskoga - Mora" EpisodeTitle="Karlskoga - Mora" SeriesTitle="HockeyAllsvenskan" Genre="Ishockey" GenreKey="" EpisodeNumber="68" NumberOfEpisodes="123" SeriesId="70707" FirstCalendarDate="2017-01-27T19:00:00" LastCalendarDate="2017-01-30T23:30:00" VodStart="0001-01-01T00:00:00" VodEnd="0001-01-01T00:00:00" Duration="140" ContentSourceId="0" ProductionYear="2016" Rating="Unrated" Class="Sport" Type="EpisodeProgram" Category="Game" IsDubbedVersionAvailable="false" Vod="false" OTTBlackout="false" IsDubbed="false">
+          <Resources>
+            <Image Id="527bf247-b3b6-4020-9284-98fb4671a2ba" Category="Primary" Index="0"/>
+            <Image Id="f45c7332-7af8-4008-af25-8c03a92abe82" Category="Logo" Index="0"/>
+            <Image Id="cdbfc88b-a08c-481d-b259-052151467e22" Category="Logo" Index="1"/>
+          </Resources>
+          <Synopsis>
+            <Short>Omg&#xE5;ng 40. Direkts&#xE4;ndning fr&#xE5;n Nobelhallen .</Short>
+            <Long>Omg&#xE5;ng 40. Direkts&#xE4;ndning fr&#xE5;n Nobelhallen .</Long>
+            <Facts/>
+          </Synopsis>
+        </Program>
+      </Schedule>
+      <Schedule ScheduleId="253314" NextStart="2017-01-27T21:30:00" CalendarDate="2017-01-27T21:25:00" IsPremiere="false" IsDubbed="false" Type="Live" AlsoAvailableInHD="false" AlsoAvailableIn3D="false" Is3D="false" IsPPV="false">
+        <Program ProgramId="70635" Title="Hockeyallsvenskan studio" OriginalTitle="Epi#001:Ishockey: HockeyAllsvenskan Studio" SeriesTitle="Hockeyallsvenskan studio" Genre="Ishockey" GenreKey="" EpisodeNumber="1" NumberOfEpisodes="50" SeriesId="71398" FirstCalendarDate="2015-09-11T18:50:00" LastCalendarDate="2017-03-28T21:40:00" VodStart="0001-01-01T00:00:00" VodEnd="0001-01-01T00:00:00" Duration="1" ContentSourceId="0" Rating="Unrated" Class="Regular" Type="EpisodeProgram" Category="Studio" IsDubbedVersionAvailable="false" Vod="false" OTTBlackout="false" IsDubbed="false">
+          <Resources>
+            <Image Id="15f8fe6d-396e-47c4-a3f3-b1a3774ef197" Category="Primary"/>
+          </Resources>
+          <Synopsis>
+            <Short>Del 1/50.</Short>
+            <Long>Direkts&#xE4;ndning fr&#xE5;n C More-studion.</Long>
+            <Facts>Del 1/50.</Facts>
+          </Synopsis>
+        </Program>
+      </Schedule>
+    </Channel>
+    <Channel ChannelId="25" Name="CanalSportFotboll" Title="C More Fotboll" LogoId="b8dbd970-cad1-47ac-896b-5966729dc020" LogoDarkId="3d3d04f9-ef16-40f4-9ff6-b6e769f25c63" LogoLightId="00000000-0000-0000-0000-000000000000" IsHd="false">
+      <Schedule ScheduleId="222661" PlayAssetId1="3712852" NextStart="2017-01-27T22:45:00" CalendarDate="2017-01-27T20:40:00" IsPremiere="false" IsDubbed="false" Type="Live" AlsoAvailableInHD="true" AlsoAvailableIn3D="false" Is3D="false" IsPPV="false">
+        <Program ProgramId="83186" Title="Fotboll: Premiership 16/17: Aberdeen - Dundee FC" OriginalTitle="Aberdeen - Dundee FC" EpisodeTitle="Aberdeen - Dundee FC" SeriesTitle="Skottska Premiership" Genre="Fotboll" GenreKey="" EpisodeNumber="33" NumberOfEpisodes="50" SeriesId="59764" FirstCalendarDate="2017-01-27T20:40:00" LastCalendarDate="2017-02-11T17:40:00" VodStart="0001-01-01T00:00:00" VodEnd="0001-01-01T00:00:00" Duration="118" ContentSourceId="0" ProductionYear="2016" Rating="Unrated" Class="Sport" Type="EpisodeProgram" Category="Game" IsDubbedVersionAvailable="false" Vod="false" OTTBlackout="false" IsDubbed="false">
+          <Resources>
+            <Image Id="a1af3686-8280-4415-81ef-7a9916e84a15" Category="Primary" Index="0"/>
+            <Image Id="4d89289e-ce74-4d56-87dc-f08cdb420997" Category="Logo" Index="0"/>
+            <Image Id="1979c524-9820-4613-80dd-605cf1364fee" Category="Logo" Index="1"/>
+          </Resources>
+          <Synopsis>
+            <Short>Omg&#xE5;ng 22. Direkts&#xE4;ndning.</Short>
+            <Long>Omg&#xE5;ng 22. Direkts&#xE4;ndning.</Long>
+            <Facts/>
+          </Synopsis>
+        </Program>
+      </Schedule>
+    </Channel>
+    <Channel ChannelId="91" Name="CMoreLive5" Title="C More Live 5" LogoId="743a3664-c9fb-4082-ba25-8074a35cd91e" LogoDarkId="1fbe0658-134f-46da-8d11-986bb8943f68" LogoLightId="00000000-0000-0000-0000-000000000000" IsHd="false"/>
+    <Channel ChannelId="26" Name="CanalSportHockey" Title="C More Hockey" LogoId="6642353b-49c8-4729-8a8b-c7c7eacaac24" LogoDarkId="ccebba9a-57fc-4af5-8bce-3d162d9496ba" LogoLightId="00000000-0000-0000-0000-000000000000" IsHd="false">
+      <Schedule ScheduleId="254988" PlayAssetId1="3650096" NextStart="2017-01-27T21:30:00" CalendarDate="2017-01-27T18:30:00" IsPremiere="false" IsDubbed="false" Type="Live" AlsoAvailableInHD="true" AlsoAvailableIn3D="false" Is3D="false" IsPPV="false">
+        <Program ProgramId="80950" Title="Ishockey: SHL 16/17: HV71 - Leksand" OriginalTitle="HV71 - Leksand" EpisodeTitle="HV71 - Leksand" SeriesTitle="SHL" Genre="Ishockey" GenreKey="" EpisodeNumber="264" NumberOfEpisodes="367" SeriesId="70790" FirstCalendarDate="2017-01-27T18:30:00" LastCalendarDate="2017-02-01T02:00:00" VodStart="0001-01-01T00:00:00" VodEnd="0001-01-01T00:00:00" Duration="166" ContentSourceId="0" ProductionYear="2016" Rating="Unrated" Class="Sport" Type="EpisodeProgram" Category="Game" IsDubbedVersionAvailable="false" Vod="false" OTTBlackout="false" IsDubbed="false">
+          <Resources>
+            <Image Id="f4e3edce-105b-4b1b-b032-79ed31d4fd76" Category="Primary" Index="0"/>
+            <Image Id="079dfe0f-0c08-46d1-aeb1-6b040015cc96" Category="Logo" Index="0"/>
+            <Image Id="2238c3c5-c5fe-41ea-a867-1bb4e94834a1" Category="Logo" Index="1"/>
+          </Resources>
+          <Synopsis>
+            <Short>Omg&#xE5;ng 38. Direkts&#xE4;ndning fr&#xE5;n Kinnarps Arena .</Short>
+            <Long>Omg&#xE5;ng 38. Direkts&#xE4;ndning fr&#xE5;n Kinnarps Arena .</Long>
+            <Facts/>
+          </Synopsis>
+        </Program>
+      </Schedule>
+    </Channel>
+    <Channel ChannelId="22" Name="CanalSport3" Title="C More Live" LogoId="b7155d45-a8ca-4d8f-bfd7-b0471b90a525" LogoDarkId="f7ca8eea-f078-4974-b7eb-ce2a0ebed13a" LogoLightId="00000000-0000-0000-0000-000000000000" IsHd="false">
+      <Schedule ScheduleId="224280" PlayAssetId1="3648734" NextStart="2017-01-27T21:25:00" CalendarDate="2017-01-27T18:55:00" IsPremiere="false" IsDubbed="false" Type="Live" AlsoAvailableInHD="true" AlsoAvailableIn3D="false" Is3D="false" IsPPV="false">
+        <Program ProgramId="85256" Title="Ishockey: HockeyAllsvenskan 16/17: Timr&#xE5; - Almtuna" OriginalTitle="Timr&#xE5; - Almtuna" EpisodeTitle="Timr&#xE5; - Almtuna" SeriesTitle="HockeyAllsvenskan" Genre="Ishockey" GenreKey="" EpisodeNumber="106" NumberOfEpisodes="123" SeriesId="70707" FirstCalendarDate="2017-01-27T18:55:00" LastCalendarDate="2017-01-31T16:00:00" VodStart="0001-01-01T00:00:00" VodEnd="0001-01-01T00:00:00" Duration="135" ContentSourceId="0" ProductionYear="2016" Rating="Unrated" Class="Sport" Type="EpisodeProgram" Category="Game" IsDubbedVersionAvailable="false" Vod="false" OTTBlackout="false" IsDubbed="false">
+          <Resources>
+            <Image Id="5aad6bab-9928-4e52-885f-b35bc3470b0d" Category="Primary" Index="0"/>
+            <Image Id="22e6ffc5-12dc-4af3-9e13-17b4ac2da7d0" Category="Logo" Index="0"/>
+            <Image Id="ac4213c2-3d76-4814-80f1-d918700c4eaf" Category="Logo" Index="1"/>
+          </Resources>
+          <Synopsis>
+            <Short>Omg&#xE5;ng 40. Direkts&#xE4;ndning fr&#xE5;n NHK Arena .</Short>
+            <Long>Omg&#xE5;ng 40. Direkts&#xE4;ndning fr&#xE5;n NHK Arena .</Long>
+            <Facts/>
+          </Synopsis>
+        </Program>
+      </Schedule>
+    </Channel>
+    <Channel ChannelId="3" Name="CanalExtra1" Title="C More Live 2" LogoId="0941d6ad-0426-4471-8386-87879267dd26" LogoDarkId="8971a9ec-237f-4ba1-893d-5344282e4923" LogoLightId="00000000-0000-0000-0000-000000000000" IsHd="false"/>
+    <Channel ChannelId="4" Name="CanalExtra2" Title="C More Live 3" LogoId="76773793-384e-479b-9a60-3a0ab8ee8d7c" LogoDarkId="0278a7b6-1f9e-4886-bcfd-017461ae236d" LogoLightId="00000000-0000-0000-0000-000000000000" IsHd="false"/>
+    <Channel ChannelId="5" Name="CanalExtra3" Title="C More Live 4" LogoId="9d9ce091-bc55-4ea8-bc40-19359125cf09" LogoDarkId="b87cab69-c4ce-4837-98df-283a26cf4577" LogoLightId="00000000-0000-0000-0000-000000000000" IsHd="false"/>
+    <Channel ChannelId="70" Name="CMoreGolfHD" Title="C More Golf HD" LogoId="4d45aeb6-d8ea-4841-9c89-5fd14ce26210" LogoDarkId="38966b1f-0ad0-4405-aa23-50ab638cbf8c" LogoLightId="00000000-0000-0000-0000-000000000000" IsHd="true"/>
+  </Day>
+</Epg>
+`)
+
+// Data retrieved like this:
+//
 //     curl -H "Accept: application/xml" https://api.cmore.se/epg/se/sv/2017-01-25 | xmllint --format - | pbcopy
 //
 var swedishFullDayEPGResponseXML = []byte(`<?xml version="1.0"?>
