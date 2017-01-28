@@ -29,15 +29,15 @@ func TestResponseDay(t *testing.T) {
 	d1 := Day{
 		BroadcastDate: "2017-01-01T00:00:00",
 		Channels: []Channel{
-			Channel{ID: "1"},
+			{ID: "1"},
 		},
 	}
 
 	d2 := Day{
 		BroadcastDate: "2017-01-02T00:00:00",
 		Channels: []Channel{
-			Channel{ID: "1"},
-			Channel{ID: "2"},
+			{ID: "1"},
+			{ID: "2"},
 		},
 	}
 
