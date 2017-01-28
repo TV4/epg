@@ -264,7 +264,7 @@ type Channel struct {
 // Schedule is the TV program schedule of a channel in the EPG
 type Schedule struct {
 	ID                string  `xml:"ScheduleId,attr" json:"schedule_id"`
-	NextStart         string  `xml:NextStart",attr" json:"next_start"`
+	NextStart         string  `xml:"NextStart,attr" json:"next_start"`
 	CalendarDate      string  `xml:"CalendarDate,attr" json:"calendar_date"`
 	IsPremiere        bool    `xml:"IsPremiere,attr" json:"premiere"`
 	IsDubbed          bool    `xml:"IsDubbed,attr" json:"dubbed"`
