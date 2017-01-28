@@ -1,6 +1,7 @@
 # epg
 
 [![Build Status](https://travis-ci.org/TV4/epg.svg?branch=master)](https://travis-ci.org/TV4/epg)
+[![Go Report Card](https://goreportcard.com/badge/github.com/TV4/epg)](https://goreportcard.com/report/github.com/TV4/epg)
 [![GoDoc](https://img.shields.io/badge/godoc-reference-blue.svg?style=flat)](https://godoc.org/github.com/TV4/epg)
 [![License MIT](https://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/TV4/epg#license-mit)
 
