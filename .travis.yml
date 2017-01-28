@@ -5,3 +5,6 @@ go:
   - 1.7.5
 
 sudo: false
+
+before_script:
+  - go vet ./...
