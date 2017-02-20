@@ -91,7 +91,7 @@ func (c *client) GetChannelGroup(ctx context.Context, country Country, language 
 }
 
 func (c *client) GetChannel(ctx context.Context, country Country, language Language, fromDate, toDate, channelID string, attributes ...url.Values) (*Response, error) {
-	return c.get(ctx, c.getChannelGroupPath(country, language, fromDate, toDate, channelID), c.query(attributes))
+	return c.get(ctx, c.getChannelPath(country, language, fromDate, toDate, channelID), c.query(attributes))
 }
 
 func (c *client) getPath(country Country, language Language, date string) string {
