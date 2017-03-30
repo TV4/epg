@@ -34,8 +34,7 @@ func main() {
 	var (
 		ec   = epg.NewClient()
 		ctx  = context.Background()
-		now  = time.Now()
-		date = epg.Date(now.Year(), now.Month(), now.Day())
+		date = epg.DateAtTime(time.Now())
 	)
 
 	if r, err := ec.Get(ctx, epg.Sweden, epg.Swedish, date); err == nil {
