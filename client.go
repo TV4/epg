@@ -11,23 +11,16 @@ import (
 	"time"
 )
 
-// Client for EPG Web API
-type Client interface {
-	Get(ctx context.Context, country Country, language Language, date string, attributes ...url.Values) (*Response, error)
-	GetPeriod(ctx context.Context, country Country, language Language, fromDate, toDate string, attributes ...url.Values) (*Response, error)
-	GetChannelGroup(ctx context.Context, country Country, language Language, fromDate, toDate, channelGroup string, attributes ...url.Values) (*Response, error)
-	GetChannel(ctx context.Context, country Country, language Language, fromDate, toDate, channelID string, attributes ...url.Values) (*Response, error)
-}
-
-type client struct {
+// Client for the EPG Web API
+type Client struct {
 	httpClient *http.Client
 	baseURL    *url.URL
 	userAgent  string
 }
 
 // NewClient creates an EPG Client
-func NewClient(options ...func(*client)) Client {
-	c := &client{
+func NewClient(options ...func(*Client)) *Client {
+	c := &Client{
 		httpClient: &http.Client{
 			Timeout: 20 * time.Second,
 		},
@@ -46,15 +39,15 @@ func NewClient(options ...func(*client)) Client {
 }
 
 // HTTPClient changes the *client HTTP client to the provided *http.Client
-func HTTPClient(hc *http.Client) func(*client) {
-	return func(c *client) {
+func HTTPClient(hc *http.Client) func(*Client) {
+	return func(c *Client) {
 		c.httpClient = hc
 	}
 }
 
 // BaseURL changes the *client base URL based on the provided rawurl
-func BaseURL(rawurl string) func(*client) {
-	return func(c *client) {
+func BaseURL(rawurl string) func(*Client) {
+	return func(c *Client) {
 		if u, err := url.Parse(rawurl); err == nil {
 			c.baseURL = u
 		}
@@ -62,8 +55,8 @@ func BaseURL(rawurl string) func(*client) {
 }
 
 // UserAgent changes the User-Agent used in requests sent by the *client
-func UserAgent(ua string) func(*client) {
-	return func(c *client) {
+func UserAgent(ua string) func(*Client) {
+	return func(c *Client) {
 		c.userAgent = ua
 	}
 }
@@ -78,39 +71,39 @@ func DateAtTime(t time.Time) string {
 	return Date(t.Date())
 }
 
-func (c *client) Get(ctx context.Context, country Country, language Language, date string, attributes ...url.Values) (*Response, error) {
+func (c *Client) Get(ctx context.Context, country Country, language Language, date string, attributes ...url.Values) (*Response, error) {
 	return c.get(ctx, c.getPath(country, language, date), c.query(attributes))
 }
 
-func (c *client) GetPeriod(ctx context.Context, country Country, language Language, fromDate, toDate string, attributes ...url.Values) (*Response, error) {
+func (c *Client) GetPeriod(ctx context.Context, country Country, language Language, fromDate, toDate string, attributes ...url.Values) (*Response, error) {
 	return c.get(ctx, c.getPeriodPath(country, language, fromDate, toDate), c.query(attributes))
 }
 
-func (c *client) GetChannelGroup(ctx context.Context, country Country, language Language, fromDate, toDate, channelGroup string, attributes ...url.Values) (*Response, error) {
+func (c *Client) GetChannelGroup(ctx context.Context, country Country, language Language, fromDate, toDate, channelGroup string, attributes ...url.Values) (*Response, error) {
 	return c.get(ctx, c.getChannelGroupPath(country, language, fromDate, toDate, channelGroup), c.query(attributes))
 }
 
-func (c *client) GetChannel(ctx context.Context, country Country, language Language, fromDate, toDate, channelID string, attributes ...url.Values) (*Response, error) {
+func (c *Client) GetChannel(ctx context.Context, country Country, language Language, fromDate, toDate, channelID string, attributes ...url.Values) (*Response, error) {
 	return c.get(ctx, c.getChannelPath(country, language, fromDate, toDate, channelID), c.query(attributes))
 }
 
-func (c *client) getPath(country Country, language Language, date string) string {
+func (c *Client) getPath(country Country, language Language, date string) string {
 	return fmt.Sprintf("/epg/%s/%s/%s", country, language, date)
 }
 
-func (c *client) getPeriodPath(country Country, language Language, fromDate, toDate string) string {
+func (c *Client) getPeriodPath(country Country, language Language, fromDate, toDate string) string {
 	return fmt.Sprintf("/epg/%s/%s/%s/%s", country, language, fromDate, toDate)
 }
 
-func (c *client) getChannelGroupPath(country Country, language Language, fromDate, toDate, channelGroup string) string {
+func (c *Client) getChannelGroupPath(country Country, language Language, fromDate, toDate, channelGroup string) string {
 	return fmt.Sprintf("/epg/%s/%s/%s/%s/%s", country, language, fromDate, toDate, channelGroup)
 }
 
-func (c *client) getChannelPath(country Country, language Language, fromDate, toDate, channelID string) string {
+func (c *Client) getChannelPath(country Country, language Language, fromDate, toDate, channelID string) string {
 	return fmt.Sprintf("/epg/%s/%s/%s/%s/%s", country, language, fromDate, toDate, channelID)
 }
 
-func (c *client) get(ctx context.Context, path string, query url.Values) (*Response, error) {
+func (c *Client) get(ctx context.Context, path string, query url.Values) (*Response, error) {
 	req, err := c.request(ctx, path, query)
 	if err != nil {
 		return nil, err
@@ -129,7 +122,7 @@ func (c *client) get(ctx context.Context, path string, query url.Values) (*Respo
 	return r, nil
 }
 
-func (c *client) query(attributes []url.Values) url.Values {
+func (c *Client) query(attributes []url.Values) url.Values {
 	if len(attributes) > 0 {
 		return attributes[0]
 	}
@@ -137,7 +130,7 @@ func (c *client) query(attributes []url.Values) url.Values {
 	return url.Values{}
 }
 
-func (c *client) request(ctx context.Context, path string, query url.Values) (*http.Request, error) {
+func (c *Client) request(ctx context.Context, path string, query url.Values) (*http.Request, error) {
 	rawurl := path
 
 	if len(query) > 0 {
@@ -162,7 +155,7 @@ func (c *client) request(ctx context.Context, path string, query url.Values) (*h
 	return req, nil
 }
 
-func (c *client) do(req *http.Request) (*Response, error) {
+func (c *Client) do(req *http.Request) (*Response, error) {
 	resp, err := c.httpClient.Do(req)
 	if err != nil {
 		return nil, err

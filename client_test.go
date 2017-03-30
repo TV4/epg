@@ -10,11 +10,7 @@ import (
 )
 
 func TestNewClient(t *testing.T) {
-	c, ok := NewClient().(*client)
-
-	if !ok {
-		t.Fatalf("expected *client")
-	}
+	c := NewClient()
 
 	if got, want := c.httpClient.Timeout, 20*time.Second; got != want {
 		t.Fatalf("c.httpClient.Timeout = %s, want %s", got, want)
@@ -32,11 +28,7 @@ func TestNewClient(t *testing.T) {
 func TestHTTPClient(t *testing.T) {
 	hc := &http.Client{Timeout: 5 * time.Second}
 
-	c, ok := NewClient(HTTPClient(hc)).(*client)
-
-	if !ok {
-		t.Fatalf("expected *client")
-	}
+	c := NewClient(HTTPClient(hc))
 
 	if got, want := c.httpClient.Timeout, 5*time.Second; got != want {
 		t.Fatalf("c.httpClient.Timeout = %s, want %s", got, want)
@@ -46,11 +38,7 @@ func TestHTTPClient(t *testing.T) {
 func TestBaseURL(t *testing.T) {
 	rawurl := "http://example.com/"
 
-	c, ok := NewClient(BaseURL(rawurl)).(*client)
-
-	if !ok {
-		t.Fatalf("expected *client")
-	}
+	c := NewClient(BaseURL(rawurl))
 
 	if got, want := c.baseURL.String(), rawurl; got != want {
 		t.Fatalf("c.baseURL.String() = %q, want %q", got, want)
@@ -60,11 +48,7 @@ func TestBaseURL(t *testing.T) {
 func TestUserAgent(t *testing.T) {
 	ua := "Test-Agent"
 
-	c, ok := NewClient(UserAgent(ua)).(*client)
-
-	if !ok {
-		t.Fatalf("expected *client")
-	}
+	c := NewClient(UserAgent(ua))
 
 	if got, want := c.userAgent, ua; got != want {
 		t.Fatalf("c.userAgent = %q, want %q", got, want)
@@ -234,11 +218,7 @@ func TestGetChannel(t *testing.T) {
 func TestRequest(t *testing.T) {
 	ua := "Test-Request-Agent"
 
-	c, ok := NewClient(UserAgent(ua)).(*client)
-
-	if !ok {
-		t.Fatalf("expected *client")
-	}
+	c := NewClient(UserAgent(ua))
 
 	r, err := c.request(context.Background(), "/foo", url.Values{"bar": {"baz"}})
 	if err != nil {
@@ -254,7 +234,7 @@ func TestRequest(t *testing.T) {
 	}
 }
 
-func testServerAndClient() (*httptest.Server, Client) {
+func testServerAndClient() (*httptest.Server, *Client) {
 	ts := httptest.NewServer(http.HandlerFunc(
 		func(w http.ResponseWriter, r *http.Request) {
 			w.Header().Set("Content-Type", "application/xml; charset=utf-8")
