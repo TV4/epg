@@ -108,9 +108,31 @@ func TestGet(t *testing.T) {
 		t.Fatalf("r.Days = %d, want %d", got, want)
 	}
 
-	if got, want := len(r.Days[0].Channels), 42; got != want {
-		t.Fatalf("r.Days[0].Channels = %d, want %d", got, want)
+	d := r.Days[0]
+
+	if got, want := len(d.Channels), 42; got != want {
+		t.Fatalf("d.Channels = %d, want %d", got, want)
 	}
+
+	t.Run("tv4", func(t *testing.T) {
+		tv4 := d.Channels[30]
+
+		if got, want := len(tv4.Schedules), 33; got != want {
+			t.Fatalf("len(tv4.Schedules) = %d, want %d", got, want)
+		}
+
+		t.Run("nyheterna", func(t *testing.T) {
+			nyheterna := tv4.Schedules[16]
+
+			if got, want := nyheterna.Program.Title, "TV4Nyheterna"; got != want {
+				t.Fatalf("nyheterna.Program.Title = %q, want %q", got, want)
+			}
+
+			if got, want := nyheterna.CalendarDate.String(), "2017-01-25 19:00:00 +0100 CET"; got != want {
+				t.Fatalf("nyheterna.CalendarDate.String() = %q, want %q", got, want)
+			}
+		})
+	})
 }
 
 func TestGetPeriod(t *testing.T) {

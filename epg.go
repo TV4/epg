@@ -201,10 +201,10 @@ var (
 
 // Response data from the EPG API
 type Response struct {
-	Days      []Day  `xml:"Day,omitempty" json:"days,omitempty"`
-	FromDate  string `xml:"FromDate,attr" json:"from_date,omitempty"`
-	UntilDate string `xml:"UntilDate,attr" json:"until_date,omitempty"`
-	Meta      *Meta  `xml:"-" json:"meta,omitempty"`
+	Days      []Day `xml:"Day,omitempty" json:"days,omitempty"`
+	FromDate  Time  `xml:"FromDate,attr" json:"from_date,omitempty"`
+	UntilDate Time  `xml:"UntilDate,attr" json:"until_date,omitempty"`
+	Meta      *Meta `xml:"-" json:"meta,omitempty"`
 }
 
 // Day returns the first day in the response, or the (optional) provided date.
@@ -219,7 +219,7 @@ func (r *Response) Day(dates ...string) Day {
 	}
 
 	for _, d := range r.Days {
-		if strings.HasPrefix(d.BroadcastDate, dates[0]) {
+		if strings.HasPrefix(d.BroadcastDate.Format("2006-01-02"), dates[0]) {
 			return d
 		}
 	}
@@ -232,7 +232,7 @@ type Meta map[string]interface{}
 
 // Day is an EPG day
 type Day struct {
-	BroadcastDate string    `xml:"BroadcastDate,attr" json:"broadcast_date"`
+	BroadcastDate Time      `xml:"BroadcastDate,attr" json:"broadcast_date"`
 	Channels      []Channel `xml:"Channel" json:"channels,omitempty"`
 }
 
@@ -263,8 +263,8 @@ type Channel struct {
 // Schedule is the TV program schedule of a channel in the EPG
 type Schedule struct {
 	ID                string  `xml:"ScheduleId,attr" json:"schedule_id"`
-	NextStart         string  `xml:"NextStart,attr" json:"next_start"`
-	CalendarDate      string  `xml:"CalendarDate,attr" json:"calendar_date"`
+	NextStart         Time    `xml:"NextStart,attr" json:"next_start"`
+	CalendarDate      Time    `xml:"CalendarDate,attr" json:"calendar_date"`
 	IsPremiere        bool    `xml:"IsPremiere,attr" json:"premiere"`
 	IsDubbed          bool    `xml:"IsDubbed,attr" json:"dubbed"`
 	Type              string  `xml:"Type,attr" json:"type"`
@@ -283,8 +283,8 @@ type Program struct {
 	OriginalTitle            string  `xml:"OriginalTitle,attr" json:"original_title"`
 	Genre                    string  `xml:"Genre,attr" json:"genre"`
 	GenreKey                 string  `xml:"GenreKey,attr" json:"genre_key"`
-	FirstCalendarDate        string  `xml:"FirstCalendarDate,attr" json:"first_calendar_date"`
-	LastCalendarDate         string  `xml:"LastCalendarDate,attr" json:"last_calendar_date"`
+	FirstCalendarDate        Time    `xml:"FirstCalendarDate,attr" json:"first_calendar_date"`
+	LastCalendarDate         Time    `xml:"LastCalendarDate,attr" json:"last_calendar_date"`
 	VodStart                 string  `xml:"VodStart,attr" json:"vod_start"`
 	VodEnd                   string  `xml:"VodEnd,attr" json:"vod_end"`
 	Duration                 int     `xml:"Duration,attr" json:"duration"`

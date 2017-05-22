@@ -3,6 +3,7 @@ package epg
 import (
 	"fmt"
 	"testing"
+	"time"
 )
 
 func TestChannelID(t *testing.T) {
@@ -27,14 +28,14 @@ func TestChannelID(t *testing.T) {
 
 func TestResponseDay(t *testing.T) {
 	d1 := Day{
-		BroadcastDate: "2017-01-01T00:00:00",
+		BroadcastDate: Time{time.Date(2017, time.January, 1, 0, 0, 0, 0, Stockholm)},
 		Channels: []Channel{
 			{ID: "1"},
 		},
 	}
 
 	d2 := Day{
-		BroadcastDate: "2017-01-02T00:00:00",
+		BroadcastDate: Time{time.Date(2017, time.January, 2, 0, 0, 0, 0, Stockholm)},
 		Channels: []Channel{
 			{ID: "1"},
 			{ID: "2"},
