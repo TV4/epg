@@ -285,8 +285,8 @@ type Program struct {
 	GenreKey                 string  `xml:"GenreKey,attr" json:"genre_key"`
 	FirstCalendarDate        Time    `xml:"FirstCalendarDate,attr" json:"first_calendar_date"`
 	LastCalendarDate         Time    `xml:"LastCalendarDate,attr" json:"last_calendar_date"`
-	VodStart                 string  `xml:"VodStart,attr" json:"vod_start"`
-	VodEnd                   string  `xml:"VodEnd,attr" json:"vod_end"`
+	VodStart                 Time    `xml:"VodStart,attr" json:"vod_start"`
+	VodEnd                   Time    `xml:"VodEnd,attr" json:"vod_end"`
 	Duration                 int     `xml:"Duration,attr" json:"duration"`
 	ContentSourceID          string  `xml:"ContentSourceId,attr" json:"content_source_id"`
 	ProductionYear           int     `xml:"ProductionYear,attr" json:"production_year"`
