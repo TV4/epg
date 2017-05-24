@@ -5,7 +5,7 @@
 [![GoDoc](https://img.shields.io/badge/godoc-reference-blue.svg?style=flat)](https://godoc.org/github.com/TV4/epg)
 [![License MIT](https://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/TV4/epg#license-mit)
 
-Go client for the [C More EPG Web API](http://api.cmore.se/).
+Go client for the [C More EPG Web API](https://api.cmore.se/).
 
 ## Status
 
@@ -41,7 +41,7 @@ func main() {
 		c := r.Day().Channel(epg.TV4)
 
 		for _, s := range c.Schedules {
-			fmt.Println(s.CalendarDate, s.Program.Title)
+			fmt.Println(s.CalendarDate.Format("15:04"), s.Program.Title)
 		}
 	}
 }
@@ -82,7 +82,7 @@ func main() {
 }
 ```
 
-**Primetime movies in Sweden 2017-01-29**
+**Primetime movies in Sweden 2017-05-24**
 
 ```go
 package main
@@ -101,7 +101,7 @@ func main() {
 		context.Background(),
 		epg.Sweden,
 		epg.Swedish,
-		epg.Date(2017, 1, 29),
+		epg.Date(2017, 5, 24),
 		url.Values{
 			"filter": {"primetimemovies"},
 		},
@@ -152,7 +152,7 @@ type movie struct {
 
 ## API documentation
 
-<http://api.cmore.se/>
+<https://api.cmore.se/>
 
 ## License (MIT)
 
