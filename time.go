@@ -30,7 +30,7 @@ func (t *Time) UnmarshalXMLAttr(attr xml.Attr) error {
 	var format string
 
 	switch len(attr.Value) {
-	case 25:
+	case 25, 20:
 		pt, err := time.Parse(time.RFC3339, attr.Value)
 		if err != nil {
 			return err

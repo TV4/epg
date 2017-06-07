@@ -20,6 +20,8 @@ func TestUnmarshalXMLAttr(t *testing.T) {
 		{xml.Attr{Value: "2017-01-02"}, time.Date(2017, 1, 2, 0, 0, 0, 0, Stockholm), nil},
 		{xml.Attr{Value: "2017-01-02T14:28:56"}, time.Date(2017, 1, 2, 14, 28, 56, 0, Stockholm), nil},
 		{xml.Attr{Value: "2017-01-02T14:28:56+02:00"}, time.Date(2017, 1, 2, 13, 28, 56, 0, Stockholm), nil},
+		{xml.Attr{Value: "0001-01-01T00:00:00Z"}, time.Date(1, 1, 1, 0, 0, 0, 0, time.UTC), nil},
+		{xml.Attr{Value: "9999-12-31T23:59:59Z"}, time.Date(9999, 12, 31, 23, 59, 59, 0, time.UTC), nil},
 		{xml.Attr{Value: "not-a-date"}, time.Time{}, errors.New(
 			`parsing time "not-a-date" as "2006-01-02": cannot parse "not-a-date" as "2006"`,
 		)},
