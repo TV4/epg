@@ -101,18 +101,23 @@ const (
 	CanalExtraHD           = "7"
 	CanalFilm1             = "8"
 	CanalFilm2             = "9"
+	CanalFilm3             = "11"
 	CanalHD                = "12"
+	CanalPanNordic         = "15"
 	CanalPlusHD            = "17"
 	CanalPlusHitsHD        = "18"
+	CanalSport2            = "21"
 	CanalSport3            = "22"
 	CanalSportFotboll      = "25"
 	CanalSportHockey       = "26"
+	CanalSportNorway       = "27"
 	CanalSportSweden       = "28"
 	CF4                    = "29"
 	SFK                    = "32"
 	SFKBoxer               = "33"
 	SHD                    = "34"
 	SeriesHD               = "52"
+	TV2SportPremium4HD     = "53"
 	CMoreFotbollHockeyKids = "54"
 	CMoreLive2HD           = "65"
 	CMoreLive3HD           = "66"
@@ -147,18 +152,23 @@ var channels = map[string]string{
 	"CanalExtraHD":           CanalExtraHD,
 	"CanalFilm1":             CanalFilm1,
 	"CanalFilm2":             CanalFilm2,
+	"CanalFilm3":             CanalFilm3,
 	"CanalHD":                CanalHD,
+	"CanalPanNordic":         CanalPanNordic,
 	"CanalPlusHD":            CanalPlusHD,
 	"CanalPlusHitsHD":        CanalPlusHitsHD,
+	"CanalSport2":            CanalSport2,
 	"CanalSport3":            CanalSport3,
 	"CanalSportFotboll":      CanalSportFotboll,
 	"CanalSportHockey":       CanalSportHockey,
+	"CanalSportNorway":       CanalSportNorway,
 	"CanalSportSweden":       CanalSportSweden,
 	"CF4":                    CF4,
 	"SFK":                    SFK,
 	"SFKBoxer":               SFKBoxer,
 	"SHD":                    SHD,
 	"SeriesHD":               SeriesHD,
+	"TV2SportPremium4HD":     TV2SportPremium4HD,
 	"CMoreFotbollHockeyKids": CMoreFotbollHockeyKids,
 	"CMoreLive2HD":           CMoreLive2HD,
 	"CMoreLive3HD":           CMoreLive3HD,
