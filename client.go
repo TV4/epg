@@ -71,18 +71,22 @@ func DateAtTime(t time.Time) string {
 	return Date(t.Date())
 }
 
+// Get retrieves a response for the given country, language and date
 func (c *Client) Get(ctx context.Context, country Country, language Language, date string, attributes ...url.Values) (*Response, error) {
 	return c.get(ctx, c.getPath(country, language, date), c.query(attributes))
 }
 
+// GetPeriod retrieves the response for the period fromDate until toDate
 func (c *Client) GetPeriod(ctx context.Context, country Country, language Language, fromDate, toDate string, attributes ...url.Values) (*Response, error) {
 	return c.get(ctx, c.getPeriodPath(country, language, fromDate, toDate), c.query(attributes))
 }
 
+// GetChannelGroup retrieves the channel group in the period fromDate until toDate
 func (c *Client) GetChannelGroup(ctx context.Context, country Country, language Language, fromDate, toDate, channelGroup string, attributes ...url.Values) (*Response, error) {
 	return c.get(ctx, c.getChannelGroupPath(country, language, fromDate, toDate, channelGroup), c.query(attributes))
 }
 
+// GetChannel retrieves a channel in the period fromDate until toDate
 func (c *Client) GetChannel(ctx context.Context, country Country, language Language, fromDate, toDate, channelID string, attributes ...url.Values) (*Response, error) {
 	return c.get(ctx, c.getChannelPath(country, language, fromDate, toDate, channelID), c.query(attributes))
 }

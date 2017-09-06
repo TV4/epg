@@ -15,10 +15,13 @@ func init() {
 	}
 }
 
+// Time wraps time.Time
 type Time struct {
 	time.Time
 }
 
+// UnmarshalXMLAttr handles special cases like 0001-01-01T00:00:00+01:00
+// and 9999-12-31T23:59:59+01:00
 func (t *Time) UnmarshalXMLAttr(attr xml.Attr) error {
 	switch attr.Value {
 	case "0001-01-01T00:00:00+01:00":
@@ -57,6 +60,7 @@ func (t *Time) UnmarshalXMLAttr(attr xml.Attr) error {
 	return nil
 }
 
+// MarshalJSON marshals the Time
 func (t *Time) MarshalJSON() ([]byte, error) {
 	if t.IsZero() {
 		return []byte("null"), nil
