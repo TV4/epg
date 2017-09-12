@@ -16,7 +16,6 @@ type Client struct {
 	httpClient *http.Client
 	baseURL    *url.URL
 	userAgent  string
-	doer       func(context.Context, *http.Client, *http.Request) (*http.Response, error)
 }
 
 // NewClient creates an EPG Client
@@ -30,7 +29,6 @@ func NewClient(options ...func(*Client)) *Client {
 			Host:   "api.cmore.se",
 		},
 		userAgent: "epg/client.go (https://github.com/TV4/epg)",
-		doer:      defaultDoer,
 	}
 
 	for _, f := range options {
@@ -60,13 +58,6 @@ func BaseURL(rawurl string) func(*Client) {
 func UserAgent(ua string) func(*Client) {
 	return func(c *Client) {
 		c.userAgent = ua
-	}
-}
-
-// Doer sets the doer to the provided function
-func Doer(do func(context.Context, *http.Client, *http.Request) (*http.Response, error)) func(*Client) {
-	return func(c *Client) {
-		c.doer = do
 	}
 }
 
@@ -117,16 +108,12 @@ func (c *Client) getChannelPath(country Country, language Language, fromDate, to
 }
 
 func (c *Client) get(ctx context.Context, path string, query url.Values) (*Response, error) {
-	if c.doer == nil {
-		c.doer = defaultDoer
-	}
-
 	req, err := c.request(ctx, path, query)
 	if err != nil {
 		return nil, err
 	}
 
-	resp, err := c.doer(ctx, c.httpClient, req)
+	resp, err := c.httpClient.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -199,13 +186,4 @@ func (c *Client) decodeResponse(resp *http.Response) (*Response, error) {
 	}
 
 	return &r, nil
-}
-
-func defaultDoer(ctx context.Context, client *http.Client, req *http.Request) (*http.Response, error) {
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-
-	return resp, nil
 }

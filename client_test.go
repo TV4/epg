@@ -275,14 +275,5 @@ func testServerAndClient() (*httptest.Server, *Client) {
 			}
 		}))
 
-	var testDoer = func(ctx context.Context, c *http.Client, req *http.Request) (*http.Response, error) {
-		resp, err := c.Do(req)
-		if err != nil {
-			return nil, err
-		}
-
-		return resp, nil
-	}
-
-	return ts, NewClient(BaseURL(ts.URL), Doer(testDoer))
+	return ts, NewClient(BaseURL(ts.URL))
 }
