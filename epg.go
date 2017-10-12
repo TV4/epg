@@ -125,6 +125,7 @@ const (
 	CMoreHockeyHD          = "68"
 	CMoreGolfHD            = "70"
 	CMoreGolfDenmarkHD     = "71"
+	CMoreGolf              = "72"
 	SVT1                   = "74"
 	SVT2                   = "75"
 	TV4                    = "76"
@@ -143,6 +144,7 @@ const (
 	CMoreStarsHD           = "90"
 	CMoreLive5             = "91"
 	CMoreLive5HD           = "92"
+	Sportkanalen           = "97"
 )
 
 var channels = map[string]string{
@@ -176,6 +178,7 @@ var channels = map[string]string{
 	"CMoreHockeyHD":          CMoreHockeyHD,
 	"CMoreGolfHD":            CMoreGolfHD,
 	"CMoreGolfDenmarkHD":     CMoreGolfDenmarkHD,
+	"CMoreGolf":              CMoreGolf,
 	"SVT1":                   SVT1,
 	"SVT2":                   SVT2,
 	"TV4":                    TV4,
@@ -194,6 +197,7 @@ var channels = map[string]string{
 	"CMoreStarsHD":           CMoreStarsHD,
 	"CMoreLive5":             CMoreLive5,
 	"CMoreLive5HD":           CMoreLive5HD,
+	"Sportkanalen":           Sportkanalen,
 }
 
 // ChannelID returns the channel ID based on provided channel name
