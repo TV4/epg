@@ -126,6 +126,7 @@ const (
 	CMoreGolfHD            = "70"
 	CMoreGolfDenmarkHD     = "71"
 	CMoreGolf              = "72"
+	CMoreGolfDenmark       = "73"
 	SVT1                   = "74"
 	SVT2                   = "75"
 	TV4                    = "76"
@@ -180,6 +181,7 @@ var channels = map[string]string{
 	"CMoreGolfHD":            CMoreGolfHD,
 	"CMoreGolfDenmarkHD":     CMoreGolfDenmarkHD,
 	"CMoreGolf":              CMoreGolf,
+	"CMoreGolfDenmark":       CMoreGolfDenmark,
 	"SVT1":                   SVT1,
 	"SVT2":                   SVT2,
 	"TV4":                    TV4,
