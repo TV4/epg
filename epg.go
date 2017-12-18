@@ -145,6 +145,7 @@ const (
 	CMoreLive5             = "91"
 	CMoreLive5HD           = "92"
 	Sportkanalen           = "97"
+	SportkanalenHD         = "98"
 )
 
 var channels = map[string]string{
@@ -198,6 +199,7 @@ var channels = map[string]string{
 	"CMoreLive5":             CMoreLive5,
 	"CMoreLive5HD":           CMoreLive5HD,
 	"Sportkanalen":           Sportkanalen,
+	"SportkanalenHD":         SportkanalenHD,
 }
 
 // ChannelID returns the channel ID based on provided channel name
