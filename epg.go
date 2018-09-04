@@ -143,8 +143,8 @@ const (
 	Barnkanalen            = "88"
 	CMoreStars             = "89"
 	CMoreStarsHD           = "90"
-	CMoreLive5             = "91"
-	CMoreLive5HD           = "92"
+	CMoreLive5             = "94"
+	CMoreLive5HD           = "95"
 	Sportkanalen           = "97"
 	SportkanalenHD         = "98"
 )
