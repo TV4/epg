@@ -4,8 +4,6 @@ go:
   - "1.11.1"
   - "1.10.4"
 
-sudo: false
-
 script:
   - go vet ./...
   - go test ./...
