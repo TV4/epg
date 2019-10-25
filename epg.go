@@ -307,7 +307,7 @@ type Program struct {
 	VodEnd                   Time    `xml:"VodEnd,attr" json:"vod_end"`
 	Duration                 int     `xml:"Duration,attr" json:"duration"`
 	ContentSourceID          string  `xml:"ContentSourceId,attr" json:"content_source_id"`
-	ProductionYear           int     `xml:"ProductionYear,attr" json:"production_year"`
+	ProductionYear           string  `xml:"ProductionYear,attr" json:"production_year"`
 	Rating                   string  `xml:"Rating,attr" json:"rating"`
 	Actors                   string  `xml:"Actors,attr" json:"actors"`
 	Directors                string  `xml:"Directors,attr" json:"directors"`
