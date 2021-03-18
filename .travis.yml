@@ -1,7 +1,7 @@
 language: go
 
 go:
-  - "1.13.3"
+  - "1.16.2"
 
 script:
   - go test ./...
